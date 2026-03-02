@@ -13,7 +13,7 @@ public class SaveDataSpaces {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private GroupEnum group;
+    private GroupEnum groupType;
     private String spaceName;
     private int spaceNumber;
     private int buyAmount;
@@ -25,8 +25,8 @@ public class SaveDataSpaces {
 
     public SaveDataSpaces() {}
 
-    public SaveDataSpaces(GroupEnum group, String spaceName, int spaceNumber, int buyAmount, int rentAmount, Boolean isStart, String owner, String color, Boolean isOwned) {
-        this.group = group;
+    public SaveDataSpaces(GroupEnum groupType, String spaceName, int spaceNumber, int buyAmount, int rentAmount, Boolean isStart, String owner, String color, Boolean isOwned) {
+        this.groupType = groupType;
         this.spaceName = spaceName;
         this.spaceNumber = spaceNumber;
         this.buyAmount = buyAmount;
@@ -105,11 +105,11 @@ public class SaveDataSpaces {
         this.spaceName = spaceName;
     }
 
-    public GroupEnum getGroup() {
-        return group;
+    public GroupEnum getGroupType() {
+        return groupType;
     }
 
-    public void setGroup(GroupEnum group) {
-        this.group = group;
+    public void setGroupType(GroupEnum groupType) {
+        this.groupType = groupType;
     }
 }

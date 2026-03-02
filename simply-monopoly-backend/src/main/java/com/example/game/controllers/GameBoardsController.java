@@ -50,7 +50,7 @@ public class GameBoardsController {
         if (existingGameBoard == null) {
             return ResponseEntity.notFound().build();
         } else {
-            existingGameBoard.setGroup(updatedGameBoard.getGroup());
+            existingGameBoard.setGroupType(updatedGameBoard.getGroupType());
             existingGameBoard.setSpaceName(updatedGameBoard.getSpaceName());
             existingGameBoard.setSpaceNumber(updatedGameBoard.getSpaceNumber());
             existingGameBoard.setBuyAmount(updatedGameBoard.getBuyAmount());

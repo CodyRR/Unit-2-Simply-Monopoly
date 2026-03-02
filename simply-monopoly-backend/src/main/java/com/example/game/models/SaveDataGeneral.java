@@ -2,9 +2,16 @@ package com.example.game.models;
 
 import com.example.game.classes.DiceEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class SaveDataGeneral {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private DiceEnum die;
     private int turnLimit;

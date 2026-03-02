@@ -13,7 +13,7 @@ public class GameBoards {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private GroupEnum group;
+    private GroupEnum groupType;
     private String spaceName;
     private int spaceNumber;
     private int buyAmount;
@@ -22,8 +22,8 @@ public class GameBoards {
 
     public GameBoards() {}
 
-    public GameBoards(GroupEnum group, String spaceName, int spaceNumber, int buyAmount, int rentAmount, Boolean isStart) {
-        this.group = group;
+    public GameBoards(GroupEnum groupType, String spaceName, int spaceNumber, int buyAmount, int rentAmount, Boolean isStart) {
+        this.groupType = groupType;
         this.spaceName = spaceName;
         this.spaceNumber = spaceNumber;
         this.buyAmount = buyAmount;
@@ -35,12 +35,12 @@ public class GameBoards {
         return id;
     }
 
-    public GroupEnum getGroup() {
-        return group;
+    public GroupEnum getGroupType() {
+        return groupType;
     }
 
-    public void setGroup(GroupEnum group) {
-        this.group = group;
+    public void setGroupType(GroupEnum groupType) {
+        this.groupType = groupType;
     }
 
     public String getSpaceName() {
