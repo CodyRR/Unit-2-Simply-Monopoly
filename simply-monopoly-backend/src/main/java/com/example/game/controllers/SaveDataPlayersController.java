@@ -38,6 +38,12 @@ public class SaveDataPlayersController {
         }
     }
 
+    @PostMapping("")
+    public ResponseEntity<?> createPlayer(@RequestBody SaveDataPlayers newPlayerData) {
+        SaveDataPlayers savedPlayerData = saveDataPlayersRepository.save(newPlayerData);
+        return new ResponseEntity<>(savedPlayerData, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePlayer(@PathVariable int id, @RequestBody SaveDataPlayers updatedPlayerData) {
         SaveDataPlayers existingPlayerData = saveDataPlayersRepository.findById(id).orElse(null);

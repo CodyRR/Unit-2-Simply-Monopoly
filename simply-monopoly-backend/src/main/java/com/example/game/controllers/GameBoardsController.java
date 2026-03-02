@@ -55,7 +55,7 @@ public class GameBoardsController {
             existingGameBoard.setSpaceNumber(updatedGameBoard.getSpaceNumber());
             existingGameBoard.setBuyAmount(updatedGameBoard.getBuyAmount());
             existingGameBoard.setRentAmount(updatedGameBoard.getRentAmount());
-            existingGameBoard.setStart(updatedGameBoard.getStart());
+            existingGameBoard.setIsStart(updatedGameBoard.getIsStart());
             GameBoards savedGameBoard = gameBoardsRepository.save(existingGameBoard);
             return new ResponseEntity<>(savedGameBoard, HttpStatus.OK);
         }

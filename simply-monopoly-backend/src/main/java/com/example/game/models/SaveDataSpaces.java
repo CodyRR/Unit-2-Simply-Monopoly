@@ -41,11 +41,11 @@ public class SaveDataSpaces {
         return id;
     }
 
-    public Boolean getOwned() {
+    public Boolean getIsOwned() {
         return isOwned;
     }
 
-    public void setOwned(Boolean owned) {
+    public void setIsOwned(Boolean owned) {
         isOwned = owned;
     }
 
@@ -65,11 +65,11 @@ public class SaveDataSpaces {
         this.owner = owner;
     }
 
-    public Boolean getStart() {
+    public Boolean getIsStart() {
         return isStart;
     }
 
-    public void setStart(Boolean start) {
+    public void setIsStart(Boolean start) {
         isStart = start;
     }
 

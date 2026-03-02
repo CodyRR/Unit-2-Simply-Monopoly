@@ -75,11 +75,11 @@ public class GameBoards {
         this.rentAmount = rentAmount;
     }
 
-    public Boolean getStart() {
+    public Boolean getIsStart() {
         return isStart;
     }
 
-    public void setStart(Boolean start) {
+    public void setIsStart(Boolean start) {
         isStart = start;
     }
 }
