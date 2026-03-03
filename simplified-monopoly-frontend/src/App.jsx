@@ -11,6 +11,7 @@ import './App.css'
 import ResultsPage from './pages/ResultsPage'
 import { defaultPlayerData } from './data/defaultPlayerData'
 import Players from './classes/Player'
+import { DataProvider } from './context/DataContext'
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
   const [defaultOption, setDefaultOption] = useState(defaultGameOption);
 
   return (
+    <DataProvider>
     <div id='body-container'>
       <Header />
       <Routes>
@@ -54,6 +56,7 @@ function App() {
       </Routes>
       <Footer />
     </div>
+    </DataProvider>
   )
 }
 
