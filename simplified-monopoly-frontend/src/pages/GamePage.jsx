@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { spaceData } from "../data/spaceData"
 import { useNavigate } from "react-router";
 import SpaceField from "../layout/SpaceField";
 import StatusBoard from "../layout/StatusBoard";
 import PlayerStatsBoard from "../layout/PlayerStatsBoard";
 import Space from "../classes/BoardSpace"
+import { DataContext } from "../context/DataContext";
 
 const GamePage = ({thePlayers, setThePlayers, generalOptions}) => {
 
     const navigate = useNavigate();
+    const {allGameBoard} = use(DataContext)
+    console.log(allGameBoard);
     const spaceArrayData = [];
-    spaceData.forEach(function(space) {
-        spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
+    // spaceData.forEach(function(space) {
+    //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
+    // })
+
+    console.log(" Space Data:" + spaceData);
+    console.log(" Board Data:" + allGameBoard)
+
+    allGameBoard.forEach(function(space) {
+        spaceArrayData.push(space);
     })
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);

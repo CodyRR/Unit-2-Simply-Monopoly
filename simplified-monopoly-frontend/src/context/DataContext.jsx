@@ -12,12 +12,10 @@ export const DataProvider = ({ children }) => {
     const fetchGameBoard = async () => {
 
         const boards = [];
-        console.log("here");
 
         try {
             const response = await fetch('http://localhost:8080/api/game-boards');
 
-            console.log(response.ok);
             if(!response.ok){
                 const errorData = await response.json();
                 throw new Error(
@@ -28,11 +26,11 @@ export const DataProvider = ({ children }) => {
 
                 data.forEach(board => {
                     let newBoardSpace = new Space(
-                        board.space_name,
-                        board.space_number,
-                        board.buy_amount,
-                        board.rent_amount,
-                        board.is_start
+                        board.spaceName,
+                        board.spaceNumber,
+                        board.buyAmount,
+                        board.rentAmount,
+                        board.isStart
                     )
                     boards.push(newBoardSpace);
                 });
@@ -62,6 +60,7 @@ export const DataProvider = ({ children }) => {
                 allGameBoard,
                 fetchGameBoard
             }}>
+            {children}
         </DataContext.Provider>
     )
 }
