@@ -10,19 +10,22 @@ import { DataContext } from "../context/DataContext";
 const GamePage = ({thePlayers, setThePlayers, generalOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard} = use(DataContext)
+    const {allGameBoard, saveSpaceData, savePlayerData} = use(DataContext)
     console.log(allGameBoard);
     const spaceArrayData = [];
     // spaceData.forEach(function(space) {
     //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
     // })
 
-    console.log(" Space Data:" + spaceData);
-    console.log(" Board Data:" + allGameBoard)
+    // allGameBoard.forEach(function(space) {
+    //     spaceArrayData.push(space);
+    // })
 
-    allGameBoard.forEach(function(space) {
+    saveSpaceData.forEach(function(space) {
         spaceArrayData.push(space);
     })
+
+    setThePlayers(savePlayerData);
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);
     const [widthSize, setWidthSize] = useState(null);

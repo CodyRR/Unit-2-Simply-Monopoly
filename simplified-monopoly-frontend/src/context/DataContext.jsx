@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import Space from '../classes/BoardSpace';
+import Players from "../classes/Player";
 
 export const DataContext = createContext();
 
@@ -8,6 +9,81 @@ export const DataProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [ allGameBoard, setAllGameBoard]  = useState(null);
+    const [ saveSpaceData, setSaveSpaceData] = useState(null);
+    const [ savePlayerData, setSavePlayerData] = useState(null);
+
+    const fetchSavePlayerData = async () => {
+
+        const savePlayer = [];
+
+        try {
+            const response = await fetch("http://localhost:8080/api/save-data-players")
+
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            } else {
+                const data = await response.json();
+
+                data.forEach(player => {
+                    let newPlayer = new Players(
+                        player.playerNumber,
+                        player.name,
+                        player.color,
+                        player.amount
+                    )
+                    newPlayer.currentSpace = player.currentSpace;
+                    savePlayer.push(newPlayer);
+                });
+            }
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setSavePlayerData(savePlayer);
+        }
+    }
+
+    const fetchSaveSpaceData = async () => {
+
+        const saveSpace = [];
+
+        try {
+            const response = await fetch("http://localhost:8080/api/save-data-spaces");
+
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            } else {
+                const data = await response.json();
+
+                data.forEach(space => {
+                    let newSpace = new Space(
+                        space.spaceName,
+                        space.spaceNumber,
+                        space.buyAmount,
+                        space.rentAmount,
+                        space.isStart
+                    )
+                    if(!newSpace.isStartSpace){
+                        newSpace.owner = space.owner;
+                    }
+                    newSpace.color = space.color;
+                    newSpace.spaceIsBought = space.isOwned;
+                    saveSpace.push(newSpace);
+                });
+            }
+
+        } catch (error){
+            console.error(error.message);
+        } finally {
+            setSaveSpaceData(saveSpace);
+        }
+    }
+
 
     const fetchGameBoard = async () => {
 
@@ -44,21 +120,28 @@ export const DataProvider = ({ children }) => {
 
     useEffect(() => {
         fetchGameBoard();
+        fetchSaveSpaceData();
+        fetchSavePlayerData();
     }, []);
 
     useEffect(() => {
-        if(allGameBoard !== null){
+        if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null){
             setIsLoading(false);
             console.log(allGameBoard);
+            console.log(saveSpaceData);
         }
-    }, [allGameBoard]);
+    }, [allGameBoard, saveSpaceData, savePlayerData]);
 
     return(
         <DataContext.Provider
             value={{
                 isLoading,
                 allGameBoard,
-                fetchGameBoard
+                fetchGameBoard,
+                saveSpaceData,
+                setSaveSpaceData,
+                savePlayerData,
+                setSavePlayerData
             }}>
             {children}
         </DataContext.Provider>

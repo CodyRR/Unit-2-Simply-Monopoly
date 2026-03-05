@@ -12,6 +12,7 @@ public class SaveDataPlayers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private int playerNumber;
     private String name;
     private String color;
     private int amount;
@@ -19,7 +20,8 @@ public class SaveDataPlayers {
 
     public SaveDataPlayers() {}
 
-    public SaveDataPlayers(String name, String color, int amount, int currentSpace) {
+    public SaveDataPlayers(int playerNumber, String name, String color, int amount, int currentSpace) {
+        this.playerNumber = playerNumber;
         this.name = name;
         this.color = color;
         this.amount = amount;
@@ -28,6 +30,14 @@ public class SaveDataPlayers {
 
     public int getId() {
         return id;
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
     }
 
     public String getName() {
