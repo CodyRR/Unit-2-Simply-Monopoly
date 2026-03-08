@@ -17,14 +17,16 @@ public class SaveDataGeneral {
     private int turnLimit;
     private int turnNumber;
     private int goAmount;
+    private int currentPlayerTurn;
 
     public SaveDataGeneral() {}
 
-    public SaveDataGeneral(DiceEnum die, int turnLimit, int turnNumber, int goAmount) {
+    public SaveDataGeneral(DiceEnum die, int turnLimit, int turnNumber, int goAmount, int currentPlayerTurn) {
         this.die = die;
         this.turnLimit = turnLimit;
         this.turnNumber = turnNumber;
         this.goAmount = goAmount;
+        this.currentPlayerTurn = currentPlayerTurn;
     }
 
     public DiceEnum getDie() {
@@ -57,5 +59,13 @@ public class SaveDataGeneral {
 
     public void setGoAmount(int goAmount) {
         this.goAmount = goAmount;
+    }
+
+    public int getCurrentPlayerTurn() {
+        return currentPlayerTurn;
+    }
+
+    public void setCurrentPlayerTurn(int currentPlayerTurn) {
+        this.currentPlayerTurn = currentPlayerTurn;
     }
 }

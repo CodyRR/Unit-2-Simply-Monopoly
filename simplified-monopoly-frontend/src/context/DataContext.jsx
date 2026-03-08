@@ -11,6 +11,57 @@ export const DataProvider = ({ children }) => {
     const [ allGameBoard, setAllGameBoard]  = useState(null);
     const [ saveSpaceData, setSaveSpaceData] = useState(null);
     const [ savePlayerData, setSavePlayerData] = useState(null);
+    const [ saveGeneralData, setSaveGeneralData] = useState(null);
+
+    const fetchSaveGeneralData = async () => {
+
+        const saveGeneral = [];
+
+        try{
+            const response = await fetch("http://localhost:8080/api/save-data-general");
+
+            if(!response.ok){
+                const errorData = await response.json();
+
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`
+                )
+            } else {
+                const data = await response.json();
+
+                data.forEach(general => {
+                    let dieSytle;
+                    switch (general.die) {
+                        case "ONEDIE":
+                            dieSytle = 1;
+                            break;
+                        case "TWODIE":
+                            dieSytle = 2;
+                            break;
+                        case "LOWDIE":
+                            dieSytle = 3;
+                            break;
+                        default:
+                            dieSytle = 1;
+                    }
+
+                    let newGeneral = {
+                        turnLimit: general.turnLimit,
+                        diceStyle: dieSytle,
+                        passGoAmount: general.goAmount,
+                        turnNumber: general.turnNumber,
+                        currentPlayerTurn: general.currentPlayerTurn
+                    }
+
+                    saveGeneral.push(newGeneral);
+                })
+            }
+        } catch (error) {
+            console.log(error.message);
+        } finally{
+            setSaveGeneralData(saveGeneral);
+        }
+    }
 
     const fetchSavePlayerData = async () => {
 
@@ -122,15 +173,17 @@ export const DataProvider = ({ children }) => {
         fetchGameBoard();
         fetchSaveSpaceData();
         fetchSavePlayerData();
+        fetchSaveGeneralData();
     }, []);
 
     useEffect(() => {
-        if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null){
+        if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
             console.log(allGameBoard);
             console.log(saveSpaceData);
+            console.log(saveGeneralData);
         }
-    }, [allGameBoard, saveSpaceData, savePlayerData]);
+    }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
 
     return(
         <DataContext.Provider
@@ -139,9 +192,11 @@ export const DataProvider = ({ children }) => {
                 allGameBoard,
                 fetchGameBoard,
                 saveSpaceData,
-                setSaveSpaceData,
+                fetchSaveSpaceData,
                 savePlayerData,
-                setSavePlayerData
+                fetchSavePlayerData,
+                saveGeneralData,
+                fetchSaveGeneralData
             }}>
             {children}
         </DataContext.Provider>
