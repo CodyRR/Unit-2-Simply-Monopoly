@@ -10,8 +10,8 @@ import { DataContext } from "../context/DataContext";
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData} = use(DataContext)
-    console.log(generalOptions);
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, isNewGame} = use(DataContext)
+    console.log(isNewGame);
     const spaceArrayData = [];
     // spaceData.forEach(function(space) {
     //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));

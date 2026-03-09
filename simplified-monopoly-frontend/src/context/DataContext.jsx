@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [ isSaveData, setIsSaveData] = useState(false);
+    const [ isNewGame, setNewGame] = useState(true);
 
     const [ allGameBoard, setAllGameBoard]  = useState(null);
     const [ saveSpaceData, setSaveSpaceData] = useState(null);
@@ -194,6 +195,7 @@ export const DataProvider = ({ children }) => {
         <DataContext.Provider
             value={{
                 isLoading, isSaveData,
+                isNewGame, setNewGame,
                 allGameBoard,
                 fetchGameBoard,
                 saveSpaceData,

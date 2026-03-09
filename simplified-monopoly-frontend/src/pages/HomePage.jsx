@@ -1,11 +1,15 @@
-import { Link } from "react-router"
+import { Link, Navigate } from "react-router"
 import Button from "../common/Button"
 import { use } from "react"
 import { DataContext } from "../context/DataContext"
 
 const HomePage = () => {
 
-    const {isSaveData} = use(DataContext)
+    const {isSaveData, setNewGame} = use(DataContext);
+
+    const useSaveGame = () => {
+        setNewGame(false);
+    }
 
     return (
         <main id="home-container">
@@ -27,7 +31,7 @@ const HomePage = () => {
                     <tr>
                         <td>
                             <Link className='link' to="/game">
-                                <Button id="saved-button" display="Saved Game" classes="home-button" validator={isSaveData}/>
+                                <Button id="saved-button" handleClick={useSaveGame} display="Saved Game" classes="home-button" validator={isSaveData}/>
                             </Link>
                         </td>
                         <td>
