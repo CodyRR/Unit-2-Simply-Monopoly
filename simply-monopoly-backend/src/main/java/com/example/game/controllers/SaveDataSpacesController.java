@@ -74,4 +74,10 @@ public class SaveDataSpacesController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllSpaces() {
+        saveDataSpacesRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

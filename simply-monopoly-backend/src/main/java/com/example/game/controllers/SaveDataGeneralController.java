@@ -69,4 +69,10 @@ public class SaveDataGeneralController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllGeneral() {
+        saveDataGeneralRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

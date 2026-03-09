@@ -13,29 +13,38 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, isNewGame} = use(DataContext)
     console.log(isNewGame);
     const spaceArrayData = [];
-    // spaceData.forEach(function(space) {
-    //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
-    // })
+    
+    const [turnNumber, setTurnNumber] = useState(1);
+    const [currentPlayerTurn, setCurrentPlayerTurn] = useState(1);
+    if(isNewGame){
+        spaceData.forEach(function(space) {
+            spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
+        })
 
-    // allGameBoard.forEach(function(space) {
-    //     spaceArrayData.push(space);
-    // })
 
-    saveSpaceData.forEach(function(space) {
-        spaceArrayData.push(space);
-    })
+        // allGameBoard.forEach(function(space) {
+        //     spaceArrayData.push(space);
+        // })
+    } else {
+        saveSpaceData.forEach(function(space) {
+            spaceArrayData.push(space);
+        })
+    }
 
     useEffect(() =>{
-        setThePlayers(savePlayerData);
-        setGeneralOptions(saveGeneralData);
+        if(!isNewGame){
+            setThePlayers(savePlayerData);
+            setGeneralOptions(saveGeneralData);
+            setTurnNumber(saveGeneralData.turnNumber);
+            setCurrentPlayerTurn(saveGeneralData.currentPlayerTurn);
+        }
     }, [])
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);
     const [widthSize, setWidthSize] = useState(null);
     // const [turnNumber, setTurnNumber] = useState(generalOptions.turnNumber);
     // const [currentPlayerTurn, setCurrentPlayerTurn] = useState(generalOptions.currentPlayerTurn);
-    const [turnNumber, setTurnNumber] = useState(saveGeneralData.turnNumber);
-    const [currentPlayerTurn, setCurrentPlayerTurn] = useState(saveGeneralData.currentPlayerTurn);
+    
     
 
     const [gameState, setGameState] = useState("Start");

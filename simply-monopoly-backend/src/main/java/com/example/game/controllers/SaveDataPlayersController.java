@@ -69,4 +69,10 @@ public class SaveDataPlayersController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllPlayers() {
+        saveDataPlayersRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
