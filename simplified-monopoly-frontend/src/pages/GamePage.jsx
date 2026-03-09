@@ -7,11 +7,11 @@ import PlayerStatsBoard from "../layout/PlayerStatsBoard";
 import Space from "../classes/BoardSpace"
 import { DataContext } from "../context/DataContext";
 
-const GamePage = ({thePlayers, setThePlayers, generalOptions}) => {
+const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData} = use(DataContext)
-    console.log(allGameBoard);
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData} = use(DataContext)
+    console.log(generalOptions);
     const spaceArrayData = [];
     // spaceData.forEach(function(space) {
     //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
@@ -25,17 +25,25 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions}) => {
         spaceArrayData.push(space);
     })
 
-    setThePlayers(savePlayerData);
+    useEffect(() =>{
+        setThePlayers(savePlayerData);
+        setGeneralOptions(saveGeneralData);
+    }, [])
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);
     const [widthSize, setWidthSize] = useState(null);
-    const [turnNumber, setTurnNumber] = useState(1);
-    const [currentPlayerTurn, setCurrentPlayerTurn] = useState(1);
+    // const [turnNumber, setTurnNumber] = useState(generalOptions.turnNumber);
+    // const [currentPlayerTurn, setCurrentPlayerTurn] = useState(generalOptions.currentPlayerTurn);
+    const [turnNumber, setTurnNumber] = useState(saveGeneralData.turnNumber);
+    const [currentPlayerTurn, setCurrentPlayerTurn] = useState(saveGeneralData.currentPlayerTurn);
+    
+
     const [gameState, setGameState] = useState("Start");
     const [dieRoll, setDieRoll] = useState(0);
     const [dieRoll2, setDieRoll2] = useState(0);
 
-    
+    // setTurnNumber(generalOptions.turnNumber);
+    // setCurrentPlayerTurn(generalOptions.currentPlayerTurn);
 
     useEffect(() => {  // This checks screen changes for the board. Use 5 spaces on large, 4 on medium, 3 on small
 
@@ -112,7 +120,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions}) => {
         } else if(gameState === "AfterRoll") {
 
             if(currentPlayerTurn === thePlayers.length) {
-                if(turnNumber >= generalOptions.turnNumber){
+                if(turnNumber >= generalOptions.turnLimit){
                     
                     while(spaceArrayData >0){
                         spaceArrayData.pop;

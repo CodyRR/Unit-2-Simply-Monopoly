@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import HomePage from './pages/HomePage'
 import RulesPage from './pages/RulesPage'
 import OptionsPage from './pages/OptionPage'
@@ -11,7 +11,7 @@ import './App.css'
 import ResultsPage from './pages/ResultsPage'
 import { defaultPlayerData } from './data/defaultPlayerData'
 import Players from './classes/Player'
-import { DataProvider } from './context/DataContext'
+import { DataContext, DataProvider } from './context/DataContext'
 
 
 function App() {
@@ -21,13 +21,17 @@ function App() {
   const defaultGameOption = {
     turnNumber: 10,
     diceStyle: 1,
-    passGoAmount: 200
+    passGoAmount: 200,
+    turnNumber: 1,
+    currentPlayerTurn: 1
   }
 
   let gameOptions = {
-    turnNumber: 10,
+    turnLimit: 10,
     diceStyle: 1,
-    passGoAmount: 200
+    passGoAmount: 200,
+    turnNumber: 1,
+    currentPlayerTurn: 1
   }
 
   defaultPlayerData.forEach(function(playerData) {
@@ -49,7 +53,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/rules' element={<RulesPage />} />
         <Route path='/options' element={<OptionsPage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} generalOptions={generalOptions} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption} />} />
-        <Route path='/game' element={<GamePage thePlayers={thePlayers} setThePlayers={setThePlayers} generalOptions={generalOptions}/>} />
+        <Route path='/game' element={<GamePage thePlayers={thePlayers} setThePlayers={setThePlayers} generalOptions={generalOptions} setGeneralOptions={setGeneralOptions}/>} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/results' element={<ResultsPage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption}/>} />
         <Route path='*' element={<Navigate to='/' />} />'

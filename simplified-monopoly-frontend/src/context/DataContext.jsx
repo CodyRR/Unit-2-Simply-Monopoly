@@ -7,6 +7,7 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [ isSaveData, setIsSaveData] = useState(false);
 
     const [ allGameBoard, setAllGameBoard]  = useState(null);
     const [ saveSpaceData, setSaveSpaceData] = useState(null);
@@ -15,7 +16,7 @@ export const DataProvider = ({ children }) => {
 
     const fetchSaveGeneralData = async () => {
 
-        const saveGeneral = [];
+        const saveGeneral = {};
 
         try{
             const response = await fetch("http://localhost:8080/api/save-data-general");
@@ -53,7 +54,7 @@ export const DataProvider = ({ children }) => {
                         currentPlayerTurn: general.currentPlayerTurn
                     }
 
-                    saveGeneral.push(newGeneral);
+                    Object.assign(saveGeneral,newGeneral);
                 })
             }
         } catch (error) {
@@ -179,16 +180,20 @@ export const DataProvider = ({ children }) => {
     useEffect(() => {
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
-            console.log(allGameBoard);
-            console.log(saveSpaceData);
-            console.log(saveGeneralData);
+            // console.log(allGameBoard);
+            // console.log(saveSpaceData);
+            // console.log(saveGeneralData);
+            if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && saveGeneralData.length !== 0){
+                setIsSaveData(true);
+                console.log("There is save data");
+            }
         }
     }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
 
     return(
         <DataContext.Provider
             value={{
-                isLoading,
+                isLoading, isSaveData,
                 allGameBoard,
                 fetchGameBoard,
                 saveSpaceData,
