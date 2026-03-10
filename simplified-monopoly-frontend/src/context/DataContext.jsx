@@ -249,6 +249,31 @@ export const DataProvider = ({ children }) => {
         }
     }
 
+    const saveThePlayers = async (playerArray) => {
+        try {
+            for (const player of playerArray){
+                const data ={
+                    "playerNumber": player.playerId,
+                    "name": player.name,
+                    "color": player.color,
+                    "amount": player.amount,
+                    "currentSpace": player.currentSpace
+                }
+                console.log(data)
+                const response = await fetch('http://localhost:8080/api/save-data-players', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     const deleteSpaces = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/game-boards', {
@@ -326,7 +351,7 @@ export const DataProvider = ({ children }) => {
                 fetchSavePlayerData,
                 saveGeneralData,
                 fetchSaveGeneralData,
-                addNewSpace, saveTheSpaces,
+                addNewSpace, saveTheSpaces, saveThePlayers,
                 deleteSpaces, deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral
             }}>
             {children}

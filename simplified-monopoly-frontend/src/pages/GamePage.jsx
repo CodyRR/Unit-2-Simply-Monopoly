@@ -11,7 +11,7 @@ import Button from "../common/Button";
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, isNewGame} = use(DataContext)
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, isNewGame} = use(DataContext)
     console.log(isNewGame);
     const spaceArrayData = [];
     
@@ -88,6 +88,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     const saveTheGame = (event) => {
         event.preventDefault();
         saveTheSpaces(theSpaces);
+        saveThePlayers(thePlayers);
     }
 
     const gameEventHandle = (event) =>  { // This handles the game changes. When the Event handler triggers, the gameState determines what happens
