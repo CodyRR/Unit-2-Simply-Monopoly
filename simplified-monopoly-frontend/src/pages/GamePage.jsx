@@ -17,14 +17,14 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     const [turnNumber, setTurnNumber] = useState(1);
     const [currentPlayerTurn, setCurrentPlayerTurn] = useState(1);
     if(isNewGame){
-        spaceData.forEach(function(space) {
-            spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
-        })
-
-
-        // allGameBoard.forEach(function(space) {
-        //     spaceArrayData.push(space);
+        // spaceData.forEach(function(space) {
+        //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
         // })
+
+
+        allGameBoard.forEach(function(space) {
+            spaceArrayData.push(space);
+        })
     } else {
         saveSpaceData.forEach(function(space) {
             spaceArrayData.push(space);

@@ -194,24 +194,27 @@ export const DataProvider = ({ children }) => {
         }
     }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
 
-    const addNewSpace = async (newSpace) => {
-        try {
-            const data = {
-                    "groupType": "GROUPA",
-                    "spaceName": newSpace[0],
-                    "spaceNumber": newSpace[1],
-                    "buyAmount": newSpace[2],
-                    "rentAmount": newSpace[3],
-                    "isStart": newSpace[4]
-                }
-            const response = await fetch('http://localhost:8080/api/game-boards', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
 
+    const addNewSpace = async (newSpaceArray) => {
+        try {
+            for (const newSpace of newSpaceArray){
+                const data = {
+                        "groupType": "GROUPA",
+                        "spaceName": newSpace[0],
+                        "spaceNumber": newSpace[1],
+                        "buyAmount": newSpace[2],
+                        "rentAmount": newSpace[3],
+                        "isStart": newSpace[4]
+                    }
+                const response = await fetch('http://localhost:8080/api/game-boards', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            }
+            fetchGameBoard();
         } catch (error) {
             console.error(error.message);
         }

@@ -19,14 +19,10 @@ const HomePage = () => {
     }
 
     useEffect(() =>{
-        console.log("the game " + isSaveData);
-        console.log("load " + isLoading);
+    
         if(!isLoading){
             if(allGameBoard.length === 0){
-                spaceData.forEach(function(space){
-                    addNewSpace(space);
-                })
-                fetchGameBoard();
+                addNewSpace(spaceData)
             }
 
             if(isSaveData === false) {
