@@ -220,6 +220,35 @@ export const DataProvider = ({ children }) => {
         }
     }
 
+    const saveTheSpaces = async (spaceArray) => {
+        try {
+            for (const space of spaceArray){
+                const data ={
+                    "groupType": "GROUPA",
+                    "spaceName": space.name,
+                    "spaceNumber": space.spaceNum,
+                    "buyAmount": space.spaceValueStart,
+                    "rentAmount": space.spaceValueBought,
+                    "isStart": space.isStartSpace,
+                    "owner": space.owner,
+                    "color": space.color,
+                    "isOwned": space.spaceIsBought
+                }
+                console.log(data)
+                const response = await fetch('http://localhost:8080/api/save-data-spaces', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     const deleteSpaces = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/game-boards', {
@@ -297,7 +326,7 @@ export const DataProvider = ({ children }) => {
                 fetchSavePlayerData,
                 saveGeneralData,
                 fetchSaveGeneralData,
-                addNewSpace,
+                addNewSpace, saveTheSpaces,
                 deleteSpaces, deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral
             }}>
             {children}

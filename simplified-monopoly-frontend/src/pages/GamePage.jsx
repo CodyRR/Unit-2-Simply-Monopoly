@@ -6,11 +6,12 @@ import StatusBoard from "../layout/StatusBoard";
 import PlayerStatsBoard from "../layout/PlayerStatsBoard";
 import Space from "../classes/BoardSpace"
 import { DataContext } from "../context/DataContext";
+import Button from "../common/Button";
 
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, isNewGame} = use(DataContext)
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, isNewGame} = use(DataContext)
     console.log(isNewGame);
     const spaceArrayData = [];
     
@@ -44,8 +45,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     const [widthSize, setWidthSize] = useState(null);
     // const [turnNumber, setTurnNumber] = useState(generalOptions.turnNumber);
     // const [currentPlayerTurn, setCurrentPlayerTurn] = useState(generalOptions.currentPlayerTurn);
-    
-    
 
     const [gameState, setGameState] = useState("Start");
     const [dieRoll, setDieRoll] = useState(0);
@@ -84,6 +83,11 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     const rollTheDie = (max) => {
         return Math.floor(Math.random() *max) +1;
+    }
+
+    const saveTheGame = (event) => {
+        event.preventDefault();
+        saveTheSpaces(theSpaces);
     }
 
     const gameEventHandle = (event) =>  { // This handles the game changes. When the Event handler triggers, the gameState determines what happens
@@ -155,6 +159,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     return (
         <main>
+            <Button id="save-game-button" handleClick={saveTheGame} display={"Save Game"} />
             <SpaceField theSpaces={theSpaces} widthSize={widthSize} thePlayers={thePlayers}/>
             <StatusBoard thePlayers={thePlayers} setThePlayers={setThePlayers} theSpaces={theSpaces} setTheSpaces={setTheSpaces} turnNumber={turnNumber} currentPlayerTurn={currentPlayerTurn} gameState={gameState} dieRoll={dieRoll} dieRoll2={dieRoll2} buttonChange={gameEventHandle} />
             <PlayerStatsBoard thePlayers={thePlayers} />
