@@ -29,6 +29,10 @@ public class SaveDataGeneral {
         this.currentPlayerTurn = currentPlayerTurn;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public DiceEnum getDie() {
         return die;
     }

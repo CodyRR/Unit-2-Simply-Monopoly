@@ -273,6 +273,46 @@ export const DataProvider = ({ children }) => {
         }
     }
 
+    const saveTheGeneral = async (generalObject) => {
+        try {
+            let dieStyle;
+            switch (generalObject.diceStyle){
+                case 1:
+                    dieStyle = "ONEDIE";
+                    break;
+                case 2:
+                    dieStyle = "TWODIE";
+                    break;
+                case 3:
+                    dieStyle = "LOWDIE";
+                    break;
+                default:
+                    dieStyle = "ONEDIE"
+            }
+            const data = {
+                "die": dieStyle,
+                "turnLimit": generalObject.turnLimit,
+                "turnNumber": generalObject.turnNumber,
+                "goAmount": generalObject.passGoAmount,
+                "currentPlayerTurn": generalObject.currentPlayerTurn
+            }
+
+            const response = await fetch('http://localhost:8080/api/save-data-general', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const dataReturned = await response.json();
+            generalObject.id = dataReturned.id;
+
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
     const deleteSpaces = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/game-boards', {
@@ -350,7 +390,7 @@ export const DataProvider = ({ children }) => {
                 fetchSavePlayerData,
                 saveGeneralData,
                 fetchSaveGeneralData,
-                addNewSpace, saveTheSpaces, saveThePlayers,
+                addNewSpace, saveTheSpaces, saveThePlayers, saveTheGeneral,
                 deleteSpaces, deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral
             }}>
             {children}

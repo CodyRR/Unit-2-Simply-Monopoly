@@ -11,8 +11,8 @@ import Button from "../common/Button";
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, isNewGame} = use(DataContext)
-    console.log(isNewGame);
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame} = use(DataContext)
+    console.log(generalOptions);
     const spaceArrayData = [];
     
     const [turnNumber, setTurnNumber] = useState(1);
@@ -33,12 +33,17 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     }
 
     useEffect(() =>{
+  
+        saveTheGeneral(generalOptions)
+    
+        console.log(generalOptions)
         if(!isNewGame){
             setThePlayers(savePlayerData);
             setGeneralOptions(saveGeneralData);
             setTurnNumber(saveGeneralData.turnNumber);
             setCurrentPlayerTurn(saveGeneralData.currentPlayerTurn);
         }
+    
     }, [])
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);
