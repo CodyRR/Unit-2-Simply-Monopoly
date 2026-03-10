@@ -182,9 +182,8 @@ export const DataProvider = ({ children }) => {
     useEffect(() => {
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
-            // console.log(saveSpaceData);
-            // console.log(saveGeneralData);
-            if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && saveGeneralData.length !== 0){
+
+            if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
                 console.log("There is save data");
             } else {
