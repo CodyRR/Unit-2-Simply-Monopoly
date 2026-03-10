@@ -72,4 +72,10 @@ public class GameBoardsController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllGameBoards() {
+        gameBoardsRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

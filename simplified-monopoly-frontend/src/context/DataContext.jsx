@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import Space from '../classes/BoardSpace';
 import Players from "../classes/Player";
+import { spaceData } from "../data/spaceData";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [ isSaveData, setIsSaveData] = useState(false);
+    const [ isSaveData, setIsSaveData] = useState(null);
     const [ isNewGame, setNewGame] = useState(true);
 
     const [ allGameBoard, setAllGameBoard]  = useState(null);
@@ -181,15 +182,104 @@ export const DataProvider = ({ children }) => {
     useEffect(() => {
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
-            // console.log(allGameBoard);
             // console.log(saveSpaceData);
             // console.log(saveGeneralData);
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && saveGeneralData.length !== 0){
                 setIsSaveData(true);
                 console.log("There is save data");
+            } else {
+                setIsSaveData(false);
             }
+
         }
     }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
+
+    const addNewSpace = async (newSpace) => {
+        try {
+            const data = {
+                    "groupType": "GROUPA",
+                    "spaceName": newSpace[0],
+                    "spaceNumber": newSpace[1],
+                    "buyAmount": newSpace[2],
+                    "rentAmount": newSpace[3],
+                    "isStart": newSpace[4]
+                }
+            const response = await fetch('http://localhost:8080/api/game-boards', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const deleteSpaces = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/game-boards', {
+                method: "DELETE",
+            });
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const deleteSaveSpaces = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/save-data-spaces', {
+                method: "DELETE",
+            });
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const deleteSavePlayers = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/save-data-players', {
+                method: "DELETE",
+            });
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const deleteSaveGeneral = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/save-data-general', {
+                method: "DELETE",
+            });
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || `ERROR - Status ${response.status}`  
+                );
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
 
     return(
         <DataContext.Provider
@@ -203,7 +293,9 @@ export const DataProvider = ({ children }) => {
                 savePlayerData,
                 fetchSavePlayerData,
                 saveGeneralData,
-                fetchSaveGeneralData
+                fetchSaveGeneralData,
+                addNewSpace,
+                deleteSpaces, deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral
             }}>
             {children}
         </DataContext.Provider>

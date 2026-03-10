@@ -1,15 +1,44 @@
 import { Link, Navigate } from "react-router"
 import Button from "../common/Button"
-import { use } from "react"
+import { use, useEffect } from "react"
 import { DataContext } from "../context/DataContext"
+import { spaceData } from "../data/spaceData"
 
 const HomePage = () => {
 
-    const {isSaveData, setNewGame} = use(DataContext);
+    const {isLoading, allGameBoard, fetchGameBoard, isSaveData, setNewGame, deleteSpaces,
+         deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral, addNewSpace} = use(DataContext);
 
     const useSaveGame = () => {
         setNewGame(false);
     }
+
+    const testClick = (event) => {
+        event.preventDefault();
+        deleteSpaces();
+    }
+
+    useEffect(() =>{
+        console.log("the game " + isSaveData);
+        console.log("load " + isLoading);
+        if(!isLoading){
+            if(allGameBoard.length === 0){
+                spaceData.forEach(function(space){
+                    addNewSpace(space);
+                })
+                fetchGameBoard();
+            }
+
+            if(isSaveData === false) {
+                deleteSavePlayers(); 
+                deleteSaveSpaces(); 
+                deleteSaveGeneral();
+            }
+        }
+    }, [isLoading])
+
+
+    
 
     return (
         <main id="home-container">
@@ -76,6 +105,17 @@ const HomePage = () => {
                         </td>
                         <td>
                             <label>See general information about the game</label>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <Button id="test-button" handleClick={testClick} display="Test" classes="home-button" />
+                        </td>
+                        <td>
+                            <label>Test adding new space</label>
                         </td>
                     </tr>
                 </tbody>
