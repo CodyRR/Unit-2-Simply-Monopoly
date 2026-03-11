@@ -37,26 +37,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     useEffect(() =>{
   
-        const deleteSaveGeneralData = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/api/save-data-general', {
-                    method: "DELETE",
-                });
-                if(!response.ok){
-                    const errorData = await response.json();
-                    throw new Error(
-                        errorData.message || `ERROR - Status ${response.status}`  
-                    );
-                }
-                console.log("Save data general Deleted.");
-            } catch (error) {
-                console.error(error.message);
-            }
-        }
-
-        deleteSaveGeneralData();
-
-        saveTheGeneral(generalOptions)
+        
     
         if(!isNewGame){
             setThePlayers(savePlayerData);
@@ -64,9 +45,78 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
             setTurnNumber(saveGeneralData.turnNumber);
             setCurrentPlayerTurn(saveGeneralData.currentPlayerTurn);
         } else {
+            const deleteSaveGeneralData = async () => {
+                try {
+                    const responseSpace = await fetch('http://localhost:8080/api/save-data-spaces', {
+                        method: "DELETE",
+                    });
+                    console.log("Save data spaces deleted in Save.");
+
+                    const responsePlayer = await fetch('http://localhost:8080/api/save-data-players', {
+                        method: "DELETE",
+                    });
+                    const responseGeneral = await fetch('http://localhost:8080/api/save-data-general', {
+                        method: "DELETE",
+                    });
+                    if(!responseSpace.ok){
+                        const errorData = await responseSpace.json();
+                        throw new Error(
+                            errorData.message || `ERROR - Status ${responseSpace.status}`  
+                        );
+                    }
+                    if(!responsePlayer.ok){
+                        const errorData = await responsePlayer.json();
+                        throw new Error(
+                            errorData.message || `ERROR - Status ${responsePlayer.status}`  
+                        );
+                    }
+                    console.log("Save data general Deleted.");
+
+                    let dieStyle;
+                    switch (generalOptions.diceStyle){
+                        case 1:
+                            dieStyle = "ONEDIE";
+                            break;
+                        case 2:
+                            dieStyle = "TWODIE";
+                            break;
+                        case 3:
+                            dieStyle = "LOWDIE";
+                            break;
+                        default:
+                            dieStyle = "ONEDIE"
+                    }
+                    const data = {
+                        "die": dieStyle,
+                        "turnLimit": generalOptions.turnLimit,
+                        "turnNumber": generalOptions.turnNumber,
+                        "goAmount": generalOptions.passGoAmount,
+                        "currentPlayerTurn": generalOptions.currentPlayerTurn
+                    }
+
+                    const response = await fetch('http://localhost:8080/api/save-data-general', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const dataReturned = await response.json();
+                    generalOptions.id = dataReturned.id;
+                    console.log("Save data general created.");
+
+                } catch (error) {
+                    console.error(error.message);
+                }
+            }
+
+            deleteSaveGeneralData();
+
+            // saveTheGeneral(generalOptions)
             // deleteSavePlayers(); 
             //     deleteSaveSpaces(); 
-            //     deleteSaveGeneral();
+
         }
     
     }, [])

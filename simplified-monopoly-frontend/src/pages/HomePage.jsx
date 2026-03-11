@@ -78,16 +78,11 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
             } else {
                 setIsSaveData(false);
                 console.log("There is no save data");
-                deleteSavePlayers(); 
-                deleteSaveSpaces(); 
-                deleteSaveGeneral();
+                // deleteSavePlayers(); 
+                // deleteSaveSpaces(); 
+                // deleteSaveGeneral();
             }
 
-            // if(isSaveData === false) {
-            //     deleteSavePlayers(); 
-            //     deleteSaveSpaces(); 
-            //     deleteSaveGeneral();
-            // }
         }
     }, [isLoading])
 
