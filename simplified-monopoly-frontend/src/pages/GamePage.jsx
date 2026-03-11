@@ -12,11 +12,14 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     const navigate = useNavigate();
     const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame} = use(DataContext)
-    console.log(generalOptions);
+
     const spaceArrayData = [];
     
     const [turnNumber, setTurnNumber] = useState(1);
     const [currentPlayerTurn, setCurrentPlayerTurn] = useState(1);
+
+    console.log("The game is new: " + isNewGame);
+
     if(isNewGame){
         // spaceData.forEach(function(space) {
         //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
@@ -34,9 +37,27 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     useEffect(() =>{
   
+        const deleteSaveGeneralData = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/save-data-general', {
+                    method: "DELETE",
+                });
+                if(!response.ok){
+                    const errorData = await response.json();
+                    throw new Error(
+                        errorData.message || `ERROR - Status ${response.status}`  
+                    );
+                }
+                console.log("Save data general Deleted.");
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        deleteSaveGeneralData();
+
         saveTheGeneral(generalOptions)
     
-        console.log(generalOptions)
         if(!isNewGame){
             setThePlayers(savePlayerData);
             setGeneralOptions(saveGeneralData);
@@ -90,10 +111,112 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
         return Math.floor(Math.random() *max) +1;
     }
 
-    const saveTheGame = (event) => {
+    const saveTheGame = async (event) => {
         event.preventDefault();
-        saveTheSpaces(theSpaces);
-        saveThePlayers(thePlayers);
+
+        try {
+            const responseSpace = await fetch('http://localhost:8080/api/save-data-spaces', {
+                method: "DELETE",
+            });
+            console.log("Save data spaces deleted in Save.");
+
+            const responsePlayer = await fetch('http://localhost:8080/api/save-data-players', {
+                method: "DELETE",
+            });
+            console.log("Save data player deleted in Save.");
+
+            for (const space of theSpaces){
+                const data ={
+                    "groupType": "GROUPA",
+                    "spaceName": space.name,
+                    "spaceNumber": space.spaceNum,
+                    "buyAmount": space.spaceValueStart,
+                    "rentAmount": space.spaceValueBought,
+                    "isStart": space.isStartSpace,
+                    "owner": space.owner,
+                    "color": space.color,
+                    "isOwned": space.spaceIsBought
+                }
+
+                const response = await fetch('http://localhost:8080/api/save-data-spaces', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            
+            }
+            console.log("Save data space created.");
+
+            for (const player of thePlayers){
+                const data ={
+                    "playerNumber": player.playerId,
+                    "name": player.name,
+                    "color": player.color,
+                    "amount": player.amount,
+                    "currentSpace": player.currentSpace
+                }
+
+                const response = await fetch('http://localhost:8080/api/save-data-players', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+            
+            }
+            console.log("Save data Player created.");
+
+            generalOptions.turnNumber = turnNumber;
+            generalOptions.currentPlayerTurn = currentPlayerTurn;
+
+            let dieStyle;
+            switch (generalOptions.diceStyle){
+                case 1:
+                    dieStyle = "ONEDIE";
+                    break;
+                case 2:
+                    dieStyle = "TWODIE";
+                    break;
+                case 3:
+                    dieStyle = "LOWDIE";
+                    break;
+                default:
+                    dieStyle = "ONEDIE"
+            }
+            const data = {
+                "die": dieStyle,
+                "turnLimit": generalOptions.turnLimit,
+                "turnNumber": generalOptions.turnNumber,
+                "goAmount": generalOptions.passGoAmount,
+                "currentPlayerTurn": generalOptions.currentPlayerTurn
+            }
+
+            const response = await fetch('http://localhost:8080/api/save-data-general/' + generalOptions.id, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            console.log(theSpaces);
+            console.log(thePlayers);
+            console.log(generalOptions);
+            navigate("/");
+        } catch (error) {
+            console.error(error.message);
+        }
+
+        // saveTheSpaces(theSpaces);
+        // saveThePlayers(thePlayers);
+        // generalOptions.turnNumber = turnNumber;
+        // generalOptions.currentPlayerTurn = currentPlayerTurn;
+        // console.log(theSpaces);
+        // console.log(thePlayers);
+        // console.log(generalOptions);
+        // navigate("/");
     }
 
     const gameEventHandle = (event) =>  { // This handles the game changes. When the Event handler triggers, the gameState determines what happens

@@ -6,17 +6,36 @@ import { spaceData } from "../data/spaceData"
 
 const HomePage = () => {
 
-    const {isLoading, allGameBoard, fetchGameBoard, isSaveData, setNewGame, deleteSpaces,
+    console.log("At home page");
+
+    const {isLoading, allGameBoard, fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
+        fetchSaveGeneralData, isSaveData, setNewGame, setIsSaveData,
+        saveSpaceData, savePlayerData, saveGeneralData, deleteSpaces,
          deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral, addNewSpace} = use(DataContext);
+
+    console.log(isLoading);
 
     const useSaveGame = () => {
         setNewGame(false);
     }
 
+    const useNewGame = () => {
+        setNewGame(true);
+    }
+
     const testClick = (event) => {
         event.preventDefault();
-        deleteSpaces();
+        deleteSavePlayers();
+        deleteSaveSpaces(); 
+        deleteSaveGeneral();
     }
+
+    useEffect(() => {
+        fetchGameBoard();
+        fetchSaveSpaceData();
+        fetchSavePlayerData();
+        fetchSaveGeneralData();
+    }, []);
 
     useEffect(() =>{
     
@@ -25,11 +44,23 @@ const HomePage = () => {
                 addNewSpace(spaceData)
             }
 
-            if(isSaveData === false) {
+            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
+            if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
+                setIsSaveData(true);
+                console.log("There is save data");
+            } else {
+                setIsSaveData(false);
+                console.log("There is no save data");
                 deleteSavePlayers(); 
                 deleteSaveSpaces(); 
                 deleteSaveGeneral();
             }
+
+            // if(isSaveData === false) {
+            //     deleteSavePlayers(); 
+            //     deleteSaveSpaces(); 
+            //     deleteSaveGeneral();
+            // }
         }
     }, [isLoading])
 
@@ -44,7 +75,7 @@ const HomePage = () => {
                     <tr>
                         <td>
                             <Link className='link' to="/game">
-                                <Button id="play-button" display="Play" classes="home-button"/>
+                                <Button id="play-button" handleClick={useNewGame} display="Play" classes="home-button"/>
                             </Link>
                         </td>
                         <td>

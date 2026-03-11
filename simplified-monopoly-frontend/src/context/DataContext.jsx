@@ -53,7 +53,8 @@ export const DataProvider = ({ children }) => {
                         diceStyle: dieSytle,
                         passGoAmount: general.goAmount,
                         turnNumber: general.turnNumber,
-                        currentPlayerTurn: general.currentPlayerTurn
+                        currentPlayerTurn: general.currentPlayerTurn,
+                        id: general.id
                     }
 
                     Object.assign(saveGeneral,newGeneral);
@@ -172,17 +173,19 @@ export const DataProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        fetchGameBoard();
-        fetchSaveSpaceData();
-        fetchSavePlayerData();
-        fetchSaveGeneralData();
-    }, []);
+    // useEffect(() => {
+    //     fetchGameBoard();
+    //     fetchSaveSpaceData();
+    //     fetchSavePlayerData();
+    //     fetchSaveGeneralData();
+    // }, []);
 
     useEffect(() => {
+        
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
 
+            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
                 console.log("There is save data");
@@ -233,7 +236,7 @@ export const DataProvider = ({ children }) => {
                     "color": space.color,
                     "isOwned": space.spaceIsBought
                 }
-                console.log(data)
+
                 const response = await fetch('http://localhost:8080/api/save-data-spaces', {
                     method: "POST",
                     headers: {
@@ -243,6 +246,7 @@ export const DataProvider = ({ children }) => {
                 });
             
             }
+            console.log("Save data space created.");
         } catch (error) {
             console.error(error.message);
         }
@@ -258,7 +262,7 @@ export const DataProvider = ({ children }) => {
                     "amount": player.amount,
                     "currentSpace": player.currentSpace
                 }
-                console.log(data)
+
                 const response = await fetch('http://localhost:8080/api/save-data-players', {
                     method: "POST",
                     headers: {
@@ -268,6 +272,7 @@ export const DataProvider = ({ children }) => {
                 });
             
             }
+            console.log("Save data Player created.");
         } catch (error) {
             console.error(error.message);
         }
@@ -307,6 +312,7 @@ export const DataProvider = ({ children }) => {
             
             const dataReturned = await response.json();
             generalObject.id = dataReturned.id;
+            console.log("Save data general created.");
 
         } catch (error) {
             console.error(error.message)
@@ -340,6 +346,7 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
+            console.log("Save data spaces deleted.");
         } catch (error) {
             console.error(error.message);
         }
@@ -356,6 +363,7 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
+            console.log("Save data player deleted.");
         } catch (error) {
             console.error(error.message);
         }
@@ -372,6 +380,7 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
+            console.log("Save data general Deleted.");
         } catch (error) {
             console.error(error.message);
         }
@@ -380,7 +389,7 @@ export const DataProvider = ({ children }) => {
     return(
         <DataContext.Provider
             value={{
-                isLoading, isSaveData,
+                isLoading, isSaveData, setIsSaveData,
                 isNewGame, setNewGame,
                 allGameBoard,
                 fetchGameBoard,
