@@ -1,0 +1,205 @@
+
+#header-container,
+#footer-container {
+
+    background-color:  rgb(255, 85, 85);
+    color: white;
+    padding: 20px;
+    border: 5px solid black;
+    font-family: "Alfa Slab One", serif;
+    font-weight: 400;
+    font-style: normal;
+    -webkit-text-stroke: 1px black;
+}
+
+.NavMenu {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-Template-Columns: 1fr 1fr 1fr;
+}
+
+.link {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    -webkit-text-stroke-width: 0;
+}
+
+.footer-link {
+    -webkit-text-stroke: 1px black;
+}
+
+.link:visited,
+.link:link,
+.footer-link:visited,
+.footer-link:link{
+    color: white;
+    font-size: large;
+}
+
+.link:hover,
+.footer-link:hover {
+    color: rgb(177, 221, 239);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+#welcome-sign {
+    text-align: center;
+    font-size: 40px;
+}
+
+.welcome-table {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 30px;
+}
+
+td {
+    padding-right: 10px;
+    padding-bottom: 25px;
+}
+
+.home-button {
+    width: 200px;
+    height: 40px;
+    font-size: 30px;
+}
+
+.status-board {
+    text-align: center;
+    background-color: white;
+    display: grid; 
+    border: 5px solid; 
+    height: auto; 
+    grid-Template-Columns: 1fr 1fr 1fr;
+    margin: 10px;
+    padding: 10px;
+    font-size: 20px;
+    align-content: center;
+}
+
+@media screen and (max-width: 650px){
+    .footer-grid{
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 599px){
+
+    .status-board{
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+    }
+}
+
+.start-button,
+.roll-button,
+.continue-button,
+.pay-button {
+    font-size: 20px;
+    margin: 5px;
+    width: 250px;
+    height: 50px;
+}
+
+.buy-button,
+.no-button {
+    margin: 5px;
+    font-size: 20px;
+    width: 100px;
+}
+
+.player-stats-board {
+    text-align: center;
+    background-color: white;
+    display: grid;
+    border: 5px solid; 
+    height: auto; 
+    grid-Template-Columns: 1fr 1fr;
+    margin: 10px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 599px){
+    .player-stats-board{
+        grid-Template-Columns: 1fr;
+    }
+
+}
+
+.player-display-status {
+    justify-self: center;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.player-stat {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.player-icon {
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.player-display-results {
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.results-board {
+    align-items: center;
+    justify-self: center;
+}
+
+.results-board h3,
+.result-row-1,
+.result-row-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.results-board h3,
+.result-row-1 {
+    font-size: 40px;
+}
+
+.result-row-2 {
+    font-size: 30px;
+}
+
+#back-home-button {
+    align-items: center;
+    justify-self: center;
+    display: flex;
+    height: 40px;
+    font-size: 30px;
+    width: 300px;
+    text-align: center;
+    justify-content: center;
+    margin: 10px;;
+}

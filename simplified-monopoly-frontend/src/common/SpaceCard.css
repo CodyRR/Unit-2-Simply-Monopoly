@@ -1,0 +1,227 @@
+.grid {
+    display: grid;
+    --g: 3vw;
+    --y: 1.5vw;
+    --green-height: 2px;
+    grid-gap: var(--g);
+    row-gap: var(--y);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.grid>* {
+
+    position: relative;
+}
+
+.grid>*:nth-child(1)::before,
+.grid>*:last-child::before{
+    display: none;
+}
+
+.grid>*::after {
+        content: '';
+        border: solid;
+        width: 100%;
+        height: 2px;
+        background-image: linear-gradient(to right, red 0% 100%);
+        position: absolute;
+        z-index: -1;
+        top: 50%;
+        left: 100%;
+    }
+    
+.row-border{
+    border: solid;
+    background-image: linear-gradient(to right, red 0% 100%);
+    
+    height: var(--green-height);
+}
+
+@media screen and (min-width: 1200px){
+
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+
+    .grid>*:nth-child(6n -1)::before{
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%); 
+        position: absolute;
+        z-index: -1;
+        top: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(6n+1)::before{
+        display: block;
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%);
+        position: absolute;
+        z-index: -1;
+        bottom: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(6n-1)::after,
+    .grid>*:nth-child(6n)::after,
+    .grid>*:last-child::after {
+        display: none;
+    }
+
+    .row-border{
+        grid-column: 1 / 6;
+        width: 82%;
+        margin-left: 9%;
+        margin-right: 9%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1199px){
+
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .grid>*:nth-child(5n -1)::before{
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%); 
+        position: absolute;
+        z-index: -1;
+        top: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(5n+1)::before{
+        display: block;
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%);
+        position: absolute;
+        z-index: -1;
+        bottom: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(5n-1)::after,
+    .grid>*:nth-child(5n)::after,
+    .grid>*:last-child::after {
+        display: none;
+    }
+
+    .row-border{
+        grid-column: 1 / 5;
+        width: 77%;
+        margin-left: 11.5%;
+        margin-right: 11.5%;
+    }
+}
+
+@media screen and (max-width: 599px){
+
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid>*:nth-child(4n -1)::before{
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%); 
+        position: absolute;
+        z-index: -1;
+        top: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(4n+1)::before{
+        display: block;
+        content: '';
+        border: solid;
+        height: calc((var(--y) + var(--green-height)));
+        width: 2px;
+        background-image: linear-gradient(red 0% 100%);
+        position: absolute;
+        z-index: -1;
+        bottom: 100%;
+        left: 50%;
+    }
+
+
+    .grid>*:nth-child(4n-1)::after,
+    .grid>*:nth-child(4n)::after,
+    .grid>*:last-child::after {
+        display: none;
+    }
+
+    .row-border{
+        grid-column: 1 / 4;
+        width: 68%;
+        margin-left: 16%;
+        margin-right: 16%;
+    }
+}
+
+.grid>*:first-child::before{
+    display: none;
+}
+
+.card {
+    margin-left: 10px;
+    margin-right: 10px;
+	border: solid;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card-field {
+    display: inline-flex;
+    width: 100%;
+    border-bottom: solid 5px;
+    height: 100px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: rgb(219, 248, 254);
+    
+}
+
+.player-display {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.card:hover {
+    box-shadow: 10px 10px 20px 0 var(--hover-color);
+}
+
+.container {
+    padding: 2px 16px;
+    text-align: right;
+}
+
+.owner-color {
+    height: 3em;
+}

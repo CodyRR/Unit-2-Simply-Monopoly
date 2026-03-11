@@ -54,6 +54,7 @@ public class SaveDataGeneralController {
             existingGeneralData.setTurnLimit(updatedGeneralData.getTurnLimit());
             existingGeneralData.setTurnNumber(updatedGeneralData.getTurnNumber());
             existingGeneralData.setGoAmount(updatedGeneralData.getGoAmount());
+            existingGeneralData.setCurrentPlayerTurn(updatedGeneralData.getCurrentPlayerTurn());
             SaveDataGeneral savedGeneralData = saveDataGeneralRepository.save(existingGeneralData);
             return new ResponseEntity<>(savedGeneralData, HttpStatus.OK);
         }
@@ -68,5 +69,11 @@ public class SaveDataGeneralController {
             saveDataGeneralRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllGeneral() {
+        saveDataGeneralRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
