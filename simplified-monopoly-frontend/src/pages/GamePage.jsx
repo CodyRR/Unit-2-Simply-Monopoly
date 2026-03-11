@@ -70,6 +70,12 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                             errorData.message || `ERROR - Status ${responsePlayer.status}`  
                         );
                     }
+                    if(!responseGeneral.ok){
+                        const errorData = await responseGeneral.json();
+                        throw new Error(
+                            errorData.message || `ERROR - Status ${responseGeneral.status}`  
+                        );
+                    }
                     console.log("Save data general Deleted.");
 
                     let dieStyle;
@@ -101,6 +107,13 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                         },
                         body: JSON.stringify(data)
                     });
+
+                    if(!response.ok){
+                        const errorData = await response.json();
+                        throw new Error(
+                            errorData.message || `ERROR - Status ${response.status}`  
+                        );
+                    }
                     
                     const dataReturned = await response.json();
                     generalOptions.id = dataReturned.id;
