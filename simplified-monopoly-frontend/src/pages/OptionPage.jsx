@@ -21,7 +21,7 @@ const OptionsPage = ({thePlayers, setThePlayers, defaultPlayers, generalOptions,
             playerColors.push(playerData[i].color);
             optionNumber.push(playerData[i].amount);
         }
-        optionNumber.push(optionData.turnNumber);
+        optionNumber.push(optionData.turnLimit);
         let validName = checkForDuplicates(playerNames);
         let validColor = checkForDuplicates(playerColors);
         let validNumber = checkForNegatives(optionNumber)
@@ -125,7 +125,7 @@ const OptionsPage = ({thePlayers, setThePlayers, defaultPlayers, generalOptions,
 
                 <div></div>
                 <label>Turn Amount:</label>
-                <input type="number" name="turnAmount" step="1" value={optionData.turnNumber} onChange={(event) => handleGeneralChange("turnNumber", event)}/>
+                <input type="number" name="turnAmount" step="1" value={optionData.turnLimit} onChange={(event) => handleGeneralChange("turnLimit", event)}/>
                 
                 <div></div>
                 <label>Dice Number:</label>
