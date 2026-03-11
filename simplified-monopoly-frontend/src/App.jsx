@@ -50,7 +50,7 @@ function App() {
     <div id='body-container'>
       <Header />
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<HomePage setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption}/>} />
         <Route path='/rules' element={<RulesPage />} />
         <Route path='/options' element={<OptionsPage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} generalOptions={generalOptions} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption} />} />
         <Route path='/game' element={<GamePage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} generalOptions={generalOptions} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption}/>} />

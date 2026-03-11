@@ -63,6 +63,10 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
             setGeneralOptions(saveGeneralData);
             setTurnNumber(saveGeneralData.turnNumber);
             setCurrentPlayerTurn(saveGeneralData.currentPlayerTurn);
+        } else {
+            // deleteSavePlayers(); 
+            //     deleteSaveSpaces(); 
+            //     deleteSaveGeneral();
         }
     
     }, [])

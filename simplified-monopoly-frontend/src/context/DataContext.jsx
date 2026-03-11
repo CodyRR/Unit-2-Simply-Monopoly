@@ -389,7 +389,7 @@ export const DataProvider = ({ children }) => {
     return(
         <DataContext.Provider
             value={{
-                isLoading, isSaveData, setIsSaveData,
+                isLoading, setIsLoading, isSaveData, setIsSaveData,
                 isNewGame, setNewGame,
                 allGameBoard,
                 fetchGameBoard,
@@ -399,6 +399,7 @@ export const DataProvider = ({ children }) => {
                 fetchSavePlayerData,
                 saveGeneralData,
                 fetchSaveGeneralData,
+                setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
                 addNewSpace, saveTheSpaces, saveThePlayers, saveTheGeneral,
                 deleteSpaces, deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral
             }}>

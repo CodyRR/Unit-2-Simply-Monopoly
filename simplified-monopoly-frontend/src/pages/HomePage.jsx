@@ -4,12 +4,13 @@ import { use, useEffect } from "react"
 import { DataContext } from "../context/DataContext"
 import { spaceData } from "../data/spaceData"
 
-const HomePage = () => {
+const HomePage = ({setThePlayers, defaultPlayers}) => {
 
     console.log("At home page");
 
-    const {isLoading, allGameBoard, fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
+    const {isLoading, setIsLoading, allGameBoard, fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
         fetchSaveGeneralData, isSaveData, setNewGame, setIsSaveData,
+        setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
         saveSpaceData, savePlayerData, saveGeneralData, deleteSpaces,
          deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral, addNewSpace} = use(DataContext);
 
@@ -31,11 +32,37 @@ const HomePage = () => {
     }
 
     useEffect(() => {
+        setIsLoading(true);
+        setAllGameBoard(null); 
+        setSaveSpaceData(null);
+        setSavePlayerData(null);
+        setSaveGeneralData(null);
+        setThePlayers(structuredClone([...defaultPlayers]));
+        console.log("Reset")
+    }, []);
+
+    useEffect(() => {
         fetchGameBoard();
         fetchSaveSpaceData();
         fetchSavePlayerData();
         fetchSaveGeneralData();
     }, []);
+
+    useEffect(() => {
+        
+        if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
+            setIsLoading(false);
+
+            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
+            if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
+                setIsSaveData(true);
+                console.log("There is save data");
+            } else {
+                setIsSaveData(false);
+            }
+
+        }
+    }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
 
     useEffect(() =>{
     
