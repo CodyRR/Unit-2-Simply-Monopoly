@@ -126,10 +126,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
             deleteSaveGeneralData();
 
-            // saveTheGeneral(generalOptions)
-            // deleteSavePlayers(); 
-            //     deleteSaveSpaces(); 
-
         }
     
     }, [])

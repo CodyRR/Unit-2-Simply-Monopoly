@@ -19,7 +19,7 @@ function App() {
   const playerArray = [];
   const defaultArray = [];
   const defaultGameOption = {
-    turnNumber: 10,
+    turnLimit: 10,
     diceStyle: 1,
     passGoAmount: 200,
     turnNumber: 1,
