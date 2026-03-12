@@ -12,6 +12,7 @@ import ResultsPage from './pages/ResultsPage'
 import { defaultPlayerData } from './data/defaultPlayerData'
 import Players from './classes/Player'
 import { DataContext, DataProvider } from './context/DataContext'
+import EditPage from './pages/EditPage'
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
         <Route path='/game' element={<GamePage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} generalOptions={generalOptions} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption}/>} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/results' element={<ResultsPage thePlayers={thePlayers} setThePlayers={setThePlayers} defaultPlayers={defaultPlayers} setGeneralOptions={setGeneralOptions} defaultOption={defaultOption}/>} />
+        <Route path='/edit' element={<EditPage />} />
         <Route path='*' element={<Navigate to='/' />} />'
       </Routes>
       <Footer />

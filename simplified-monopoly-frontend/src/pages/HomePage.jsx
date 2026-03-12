@@ -168,6 +168,18 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                         </td>
                     </tr>
                 </tbody>
+                <tbody>
+                    <tr>
+                        <td>
+                            <Link className='link' to="/edit">
+                                <Button id="edit-button" display="Edit" classes="home-button" />
+                            </Link>
+                        </td>
+                        <td>
+                            <label>See general information about the game</label>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </main>
     )
