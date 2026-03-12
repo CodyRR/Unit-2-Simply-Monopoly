@@ -20,7 +20,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         setNewGame(false);
     }
 
-    const useNewGame = () => {
+    const useNewGame = (event) => {
         setNewGame(true);
     }
 
@@ -101,7 +101,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                             </Link>
                         </td>
                         <td>
-                            <label>Play the game with set rules</label>
+                            <label>Play the game with set rules {isSaveData && ("- Saved Data will be deleted")}</label>
                         </td>
                     </tr>
                 </tbody>
