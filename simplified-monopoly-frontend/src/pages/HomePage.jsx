@@ -14,7 +14,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         saveSpaceData, savePlayerData, saveGeneralData, deleteSpaces,
          deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral, addNewSpace} = use(DataContext);
 
-    console.log(isLoading);
+    console.log(allGameBoard);
 
     const useSaveGame = () => {
         setNewGame(false);
