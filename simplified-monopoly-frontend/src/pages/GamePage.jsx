@@ -11,7 +11,11 @@ import Button from "../common/Button";
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame} = use(DataContext)
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame,
+        deleteSaveSpaces,
+        deleteSavePlayers,
+        deleteSaveGeneral
+    } = use(DataContext)
 
     const spaceArrayData = [];
     
@@ -282,6 +286,14 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
         // navigate("/");
     }
 
+    const quitTheGame = (event) => {
+
+        deleteSaveSpaces();
+        deleteSavePlayers();
+        deleteSaveGeneral();
+        navigate("/");
+    }
+
     const gameEventHandle = (event) =>  { // This handles the game changes. When the Event handler triggers, the gameState determines what happens
         event.preventDefault();
         if(gameState === "Start"){
@@ -351,7 +363,11 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     return (
         <main>
-            <Button id="save-game-button" handleClick={saveTheGame} display={"Save Game"} />
+            <div>
+                <Button id="save-game-button" handleClick={saveTheGame} display={"Save Game"} />
+                <Button id="quit-game-button" handleClick={quitTheGame} display={"Quit Game"} />
+
+            </div>
             <SpaceField theSpaces={theSpaces} widthSize={widthSize} thePlayers={thePlayers}/>
             <StatusBoard thePlayers={thePlayers} setThePlayers={setThePlayers} theSpaces={theSpaces} setTheSpaces={setTheSpaces} turnNumber={turnNumber} currentPlayerTurn={currentPlayerTurn} gameState={gameState} dieRoll={dieRoll} dieRoll2={dieRoll2} buttonChange={gameEventHandle} />
             <PlayerStatsBoard thePlayers={thePlayers} />
