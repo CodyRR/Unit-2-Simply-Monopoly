@@ -26,6 +26,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
 
     const testClick = (event) => {
         event.preventDefault();
+        deleteSpaces();
         deleteSavePlayers();
         deleteSaveSpaces(); 
         deleteSaveGeneral();
@@ -68,7 +69,38 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
     
         if(!isLoading){
             if(allGameBoard.length === 0){
-                addNewSpace(spaceData)
+                addNewSpace(spaceData, "A");
+                addNewSpace(spaceData, "B");
+                addNewSpace(spaceData, "C");
+            } else {
+                console.log(allGameBoard);
+                let countA = 0;
+                let countB = 0;
+                let countC = 0;
+                allGameBoard.forEach(space => {
+                    switch (space.group){
+                        case "GROUPA":
+                            countA++;
+                            break;
+                        case "GROUPB":
+                            countB++;
+                            break;
+                        case "GROUPC":
+                            countC++;
+                            break;
+                    }
+
+                });
+                console.log(`GroupA: ${countA}, GroupB: ${countB}, GroupC: ${countC}`)
+                if(countA === 0){
+                    addNewSpace(spaceData, "A");
+                }
+                if(countB === 0){
+                    addNewSpace(spaceData, "B");
+                }
+                if(countC === 0){
+                    addNewSpace(spaceData, "C");
+                }
             }
 
             console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )

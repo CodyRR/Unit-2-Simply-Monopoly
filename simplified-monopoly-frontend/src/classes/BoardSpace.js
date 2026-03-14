@@ -1,7 +1,9 @@
 
 export default class Space {
-    constructor(name, spaceNum, spaceValueStart, spaceValueBought, isStartSpace){
+    constructor(name, spaceNum, spaceValueStart, spaceValueBought, isStartSpace, group, id){
 
+        this.id = id;
+        this.group = group;
         this.name = name;
         this.spaceNum = spaceNum;
         this.owner = "Sale";

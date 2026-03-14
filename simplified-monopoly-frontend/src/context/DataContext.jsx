@@ -161,7 +161,9 @@ export const DataProvider = ({ children }) => {
                         board.spaceNumber,
                         board.buyAmount,
                         board.rentAmount,
-                        board.isStart
+                        board.isStart,
+                        board.groupType,
+                        board.id
                     )
                     boards.push(newBoardSpace);
                 });
@@ -197,11 +199,11 @@ export const DataProvider = ({ children }) => {
     }, [allGameBoard, saveSpaceData, savePlayerData, saveGeneralData]);
 
 
-    const addNewSpace = async (newSpaceArray) => {
+    const addNewSpace = async (newSpaceArray, groupLetter) => {
         try {
             for (const newSpace of newSpaceArray){
                 const data = {
-                        "groupType": "GROUPA",
+                        "groupType": "GROUP" + groupLetter,
                         "spaceName": newSpace[0],
                         "spaceNumber": newSpace[1],
                         "buyAmount": newSpace[2],
@@ -216,6 +218,7 @@ export const DataProvider = ({ children }) => {
                     body: JSON.stringify(data)
                 });
             }
+            console.log("Creating space data for Set: " + groupLetter);
             fetchGameBoard();
         } catch (error) {
             console.error(error.message);
