@@ -14,7 +14,8 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
     const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame,
         deleteSaveSpaces,
         deleteSavePlayers,
-        deleteSaveGeneral
+        deleteSaveGeneral,
+        gameSet
     } = use(DataContext)
 
     const spaceArrayData = [];
@@ -28,10 +29,10 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
         // spaceData.forEach(function(space) {
         //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
         // })
-
-
         allGameBoard.forEach(function(space) {
-            spaceArrayData.push(space);
+            if(space.group === gameSet){
+                spaceArrayData.push(space);
+            }
         })
     } else {
         saveSpaceData.forEach(function(space) {
@@ -194,7 +195,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
             for (const space of theSpaces){
                 const data ={
-                    "groupType": "GROUPA",
+                    "groupType": space.group,
                     "spaceName": space.name,
                     "spaceNumber": space.spaceNum,
                     "buyAmount": space.spaceValueStart,
