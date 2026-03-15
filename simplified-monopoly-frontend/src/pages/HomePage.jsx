@@ -8,7 +8,8 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
 
     console.log("At home page");
 
-    const {isLoading, setIsLoading, allGameBoard, fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
+    const {isLoading, setIsLoading, gameSet, setGameSet, allGameBoard, 
+        fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
         fetchSaveGeneralData, isSaveData, setNewGame, setIsSaveData,
         setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
         saveSpaceData, savePlayerData, saveGeneralData, deleteSpaces,
@@ -22,6 +23,11 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
 
     const useNewGame = (event) => {
         setNewGame(true);
+    }
+
+    const handleSetChange = (event) => {
+        event.preventDefault();
+        setGameSet(event.target.value);
     }
 
     const testClick = (event) => {
@@ -134,6 +140,22 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                         </td>
                         <td>
                             <label>Play the game with set rules {isSaveData && ("- Saved Data will be deleted")}</label>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                <select name="GroupSet" id="GrouptSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
+                                    <option value="GROUPA">Set A</option>
+                                    <option value="GROUPB">Set B</option>
+                                    <option value="GROUPC">Set C</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <label>Select the game set</label>
                         </td>
                     </tr>
                 </tbody>
