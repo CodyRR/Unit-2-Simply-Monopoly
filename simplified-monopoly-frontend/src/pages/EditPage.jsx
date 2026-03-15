@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { use, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import Button from "../common/Button";
 import { Link } from "react-router";
@@ -8,9 +8,8 @@ const EditPage = () => {
     const { allGameBoard, setAllGameBoard, fetchGameBoard, setNewGame, gameSet, setGameSet} = use(DataContext)
     const [ editLine, setEditLine] = useState(null);
     const [ originalData, setOriginalData] = useState(null);
-    const [ deleteLoading, setDeleteLoading] = useState(null);
 
-     const useNewGame = (event) => {
+     const useNewGame = () => {
         setNewGame(true);
     }
 
@@ -81,7 +80,6 @@ const EditPage = () => {
             }
             
         });
-        console.log(`Last space is ${nextNum}`);
 
         try {
             const data = {
@@ -102,17 +100,13 @@ const EditPage = () => {
             fetchGameBoard();
         } catch (error) {
             console.error(error.message);
-        } finally {
-            setDeleteLoading(true);
         }
     }
 
     const deleteSpace = async (event, indexId, index) => {
         event.preventDefault();
-        setDeleteLoading(true);
 
         let spaceNumToDelete = allGameBoard[index].spaceNum;
-        console.log(indexId);
         try {
             const responseDelete = await fetch('http://localhost:8080/api/game-boards/' + indexId, {
                 method: "DELETE",
@@ -154,29 +148,32 @@ const EditPage = () => {
 
     return (
         <main>
-            <h1>Edit Board</h1>
-            <div>
-                <select name="GroupSet" id="GrouptSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
+            <h1 id="edit-title">Edit Board</h1>
+            <div id="edit-group">
+                <select name="GroupSet" id="GroupSet" className="GroupSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
                     <option value="GROUPA">Set A</option>
                     <option value="GROUPB">Set B</option>
                     <option value="GROUPC">Set C</option>
                 </select>
             </div>
-            <table className="welcome-table">
+            <table className="edit-table">
                 <thead>
                     <tr>
-                        <td>
+                        <td className="edit-table-head">
                             Number
                         </td>
                         
-                        <td>
+                        <td className="edit-table-head">
                             Space name
                         </td>                       
-                        <td>
+                        <td className="edit-table-head">
                             Buy Amount
                         </td>
-                        <td>
+                        <td className="edit-table-head">
                             Rent Amount
+                        </td>
+                        <td className="edit-table-head">
+                            Action
                         </td>
                     </tr>    
                 </thead>
@@ -184,44 +181,44 @@ const EditPage = () => {
                     {allGameBoard.map((space, index)=> {
                          if(space.spaceNum !== 0 && space.group === gameSet) {
                             return (
-                                <tr>
-                                    <td>
+                                <tr className="edit-row">
+                                    <td className="edit-space-num">
                                         {space.spaceNum}
                                     </td>
-                                    <td>{space.id}</td>
-                                    <td>
+       
+                                    <td className="edit-space-name">
                                         {editLine === space.id ? (
-                                            <input type="text" value={space.name} onChange={(e) => handleDataChange("name", e, index)} />
+                                            <input className={"input-space-name"} type="text" value={space.name} onChange={(e) => handleDataChange("name", e, index)} />
                                         ) : (
                                             space.name
                                         )}
                                     </td>
                                     
-                                    <td>
+                                    <td className="edit-buy">
                                         {editLine === space.id ? (
-                                            <input type="number" value={space.spaceValueStart} onChange={(e) => handleDataChange("spaceValueStart", e, index)}/>
+                                            <input className={"input-amount"} type="number" value={space.spaceValueStart} onChange={(e) => handleDataChange("spaceValueStart", e, index)}/>
                                         ) : (
                                             space.spaceValueStart
                                         )}
                                     </td>
-                                    <td>
+                                    <td className="edit-rent">
                                         {editLine === space.id ? (
-                                            <input type="number" value={space.spaceValueBought} onChange={(e) => handleDataChange("spaceValueBought", e, index)} />
+                                            <input className={"input-amount"} type="number" value={space.spaceValueBought} onChange={(e) => handleDataChange("spaceValueBought", e, index)} />
                                         ) : (
                                             space.spaceValueBought
                                         )}
                                         
                                     </td>
-                                    <td>
+                                    <td className="edit-action">
                                         {editLine === space.id ? (
-                                            <div>
-                                                <Button handleClick={(event) => saveSpaceData(event, index)} display={"Save"} />
-                                                <Button handleClick={(event) => cancelEdit(event, index)} display={"Cancel"} />
+                                            <div className="edit-action-buttons">
+                                                <Button classes={"edit-buttons"} handleClick={(event) => saveSpaceData(event, index)} display={"Save"} />
+                                                <Button classes={"edit-buttons"} handleClick={(event) => cancelEdit(event, index)} display={"Cancel"} />
                                             </div>
                                         ) : (
-                                            <dir>
-                                                <Button handleClick={(event) => handleEditor(event, space.id, index)} display={"Edit"} validator={editLine===null} />
-                                                <Button handleClick={(event) => deleteSpace(event, space.id, index)} display={"Delete"} validator={editLine===null} />
+                                            <dir className="edit-action-buttons">
+                                                <Button classes={"edit-buttons"} handleClick={(event) => handleEditor(event, space.id, index)} display={"Edit"} validator={editLine===null} />
+                                                <Button classes={"edit-buttons"} handleClick={(event) => deleteSpace(event, space.id, index)} display={"Delete"} validator={editLine===null} />
                                             </dir>
                                         )}
                                         
@@ -231,22 +228,20 @@ const EditPage = () => {
                         }
                         return null;
                     })}
-                    <tr>
-                        <td></td><td></td>
-                        <td>
-                            <Button handleClick={(event) => addNewSpace(event)} display={"Add New Space"} validator={editLine===null} />
-                                
-                        </td>
-                        <td></td><td></td>
-                    </tr>
+ 
                 </tbody>
             </table>
-            <Link className='link' to="/game">
-                <Button id="play-button" handleClick={useNewGame} display="Play" classes="home-button"/>
-            </Link>
-            <Link className='link' to="/options">
-                <Button id="options-button" display="Options" classes="home-button" />
-            </Link>
+            <div className="edit-end1-button">                       
+                <Button handleClick={(event) => addNewSpace(event)} display={"Add New Space"} classes={"new-space-button"} validator={editLine===null} />
+            </div>
+            <div className="edit-end2-button">
+                <Link className='link' to="/game">
+                    <Button id="play-button" handleClick={useNewGame} display="Play" classes="home-button" validator={editLine===null} />
+                </Link>
+                <Link className='link' to="/options">
+                    <Button id="options-button" display="Options" classes="home-button" validator={editLine===null} />
+                </Link>
+            </div>  
         </main>
     )
 

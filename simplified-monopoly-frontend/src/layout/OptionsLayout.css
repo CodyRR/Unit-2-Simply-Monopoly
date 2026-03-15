@@ -12,7 +12,7 @@
 input,
 select {
     height: 45px;
-    width: 100%;
+    width: 90%;
     align-self: center;
 }
 
@@ -20,6 +20,19 @@ input[type='text'],
 input[type='number'],
 select {
     font-size: 40px;
+}
+
+.input-space-name {
+    width: 95%;
+}
+
+input[type='text'].input-space-name,
+input[type='number'].input-amount {
+    font-size: 30px;
+}
+
+input[type='number'].input-amount {
+    text-align: right;
 }
 
 input[type="radio"] {

@@ -158,7 +158,7 @@ const OptionsPage = ({thePlayers, setThePlayers, defaultPlayers, generalOptions,
                 <div></div>
                 <Button id="play-options-button" handleClick={goToGame} validator={validOutput} display="Play"/>
                 
-                <Button id="edit-options-button" handleClick={goToSpaceOptions} validator={validOutput} display="Edit" />
+                <Button id="edit-options-button" handleClick={goToSpaceOptions} validator={validOutput} display="Edit Spaces" />
                 <div></div>
                 <Button id="restore-button" handleClick={restoreDefaults} display={"Restore Defaults"}/>
             </form>

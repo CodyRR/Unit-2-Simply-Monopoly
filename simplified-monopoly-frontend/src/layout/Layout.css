@@ -61,14 +61,88 @@
     font-size: 30px;
 }
 
-#GroupSet{
+.edit-table {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 30px;
+    border-spacing: 10px 5px;
+    border-collapse: collapse
+}
+
+.edit-table-head {
+    border: 5px;
+    border-style: solid;
+    text-align: center;
+    padding: 5px;
+    background-color: white;
+}
+
+#GroupSet {
     text-align: center;
     font-size: 30px;
+}
+
+.GroupSet {
+    width: 150px;
+}
+
+#edit-group {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 15px;
 }
 
 td {
     padding-right: 10px;
     padding-bottom: 25px;
+}
+
+.edit-space-num {
+    text-align: center;
+    height: 100px;
+    border: 5px solid black;
+    padding: 5px;
+}
+
+.edit-space-name {
+    height: 100px;
+    border: 5px solid black;
+    padding: 5px;
+    width: 300px;
+}
+
+.edit-buy, .edit-rent {
+    text-align: right;
+    height: 100px;
+    border: 5px solid black;
+    padding: 5px;
+    width: 25px;
+}
+
+.edit-action{
+    height: 100px;
+    border: 5px solid black;
+    padding: 5px;
+    
+}
+
+.edit-action-buttons {
+    margin: 0;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-buttons {
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+}
+
+.edit-row {
+    height: 50px;
+    background-color: azure;
+    border: 5px solid black;
 }
 
 .home-button {
@@ -214,4 +288,22 @@ td {
     justify-content: space-between;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+#edit-title {
+    text-align: center;
+    font-size: 40px;
+}
+
+.edit-end1-button,
+.edit-end2-button {
+    margin: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.new-space-button {
+    width: 400px;
+    height: 50px;
+    font-size: 30px;
 }

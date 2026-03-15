@@ -173,26 +173,16 @@ export const DataProvider = ({ children }) => {
             console.error(error.message);
         } finally {
             setAllGameBoard(boards);
-            console.log("Finished getting Board Spaces")
         }
     }
-
-    // useEffect(() => {
-    //     fetchGameBoard();
-    //     fetchSaveSpaceData();
-    //     fetchSavePlayerData();
-    //     fetchSaveGeneralData();
-    // }, []);
 
     useEffect(() => {
         
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
 
-            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
-                console.log("There is save data");
             } else {
                 setIsSaveData(false);
             }
@@ -220,7 +210,6 @@ export const DataProvider = ({ children }) => {
                     body: JSON.stringify(data)
                 });
             }
-            console.log("Creating space data for Set: " + groupLetter);
             fetchGameBoard();
         } catch (error) {
             console.error(error.message);
@@ -251,7 +240,6 @@ export const DataProvider = ({ children }) => {
                 });
             
             }
-            console.log("Save data space created.");
         } catch (error) {
             console.error(error.message);
         }
@@ -277,7 +265,6 @@ export const DataProvider = ({ children }) => {
                 });
             
             }
-            console.log("Save data Player created.");
         } catch (error) {
             console.error(error.message);
         }
@@ -317,8 +304,6 @@ export const DataProvider = ({ children }) => {
             
             const dataReturned = await response.json();
             generalObject.id = dataReturned.id;
-            console.log("Save data general created.");
-
         } catch (error) {
             console.error(error.message)
         }
@@ -351,7 +336,6 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
-            console.log("Save data spaces deleted.");
         } catch (error) {
             console.error(error.message);
         }
@@ -368,7 +352,6 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
-            console.log("Save data player deleted.");
         } catch (error) {
             console.error(error.message);
         }
@@ -385,7 +368,6 @@ export const DataProvider = ({ children }) => {
                     errorData.message || `ERROR - Status ${response.status}`  
                 );
             }
-            console.log("Save data general Deleted.");
         } catch (error) {
             console.error(error.message);
         }

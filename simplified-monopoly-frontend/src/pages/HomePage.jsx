@@ -6,15 +6,12 @@ import { spaceData } from "../data/spaceData"
 
 const HomePage = ({setThePlayers, defaultPlayers}) => {
 
-    console.log("At home page");
-
     const {isLoading, setIsLoading, gameSet, setGameSet, allGameBoard, 
         fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
         fetchSaveGeneralData, isSaveData, setNewGame, setIsSaveData,
         setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
         saveSpaceData, savePlayerData, saveGeneralData, addNewSpace} = use(DataContext);
 
-    console.log(allGameBoard);
 
     const useSaveGame = () => {
         setNewGame(false);
@@ -50,7 +47,6 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         if(allGameBoard !== null && saveSpaceData !== null && savePlayerData !== null && saveGeneralData !== null){
             setIsLoading(false);
 
-            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
             } else {
