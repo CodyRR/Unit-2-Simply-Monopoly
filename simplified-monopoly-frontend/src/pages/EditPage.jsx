@@ -5,8 +5,9 @@ import { Link } from "react-router";
 
 const EditPage = () => {
 
-    const { allGameBoard, setAllGameBoard, setNewGame, gameSet, setGameSet} = use(DataContext)
+    const { allGameBoard, setAllGameBoard, fetchGameBoard, setNewGame, gameSet, setGameSet} = use(DataContext)
     const [ editLine, setEditLine] = useState(null);
+    const [ originalData, setOriginalData] = useState(null);
 
      const useNewGame = (event) => {
         setNewGame(true);
@@ -34,14 +35,27 @@ const EditPage = () => {
                 },
                 body: JSON.stringify(data)
             });
-
+            setEditLine(null);
+            setOriginalData(null);
         } catch (error) {
             console.error(error.message);
         }
     }
 
-    const handleEditor = (event, index) => {
-        setEditLine(index);
+    const cancelEdit = (event, index) => {
+        event.preventDefault();
+        const newData = [...allGameBoard];
+        newData[index]["name"] = originalData.name;
+        newData[index]["spaceValueStart"] = originalData.spaceValueStart;
+        newData[index]["spaceValueBought"] = originalData.spaceValueBought;
+        setAllGameBoard(newData);
+        setEditLine(null);
+        setOriginalData(null);
+    }
+
+    const handleEditor = (event, indexId, index) => {
+        setEditLine(indexId);
+        setOriginalData(structuredClone(allGameBoard[index]));
         event.preventDefault();
 
     };
@@ -55,6 +69,45 @@ const EditPage = () => {
     const handleSetChange = (event) => {
         event.preventDefault();
         setGameSet(event.target.value);
+    }
+
+    const addNewSpace = async (event) => {
+        event.preventDefault();
+        let nextNum = 0;
+        allGameBoard.forEach(space => {
+            if(space.group === gameSet){
+                if(nextNum < space.spaceNum){
+                    nextNum = space.spaceNum;
+                }
+            }
+            
+        });
+        console.log(`Last space is ${nextNum}`);
+
+        try {
+            const data = {
+                "groupType": gameSet,
+                "spaceName": "New Space",
+                "spaceNumber": nextNum + 1,
+                "buyAmount": 0,
+                "rentAmount": 0,
+                "isStart": false
+            }
+            const response = await fetch('http://localhost:8080/api/game-boards', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            fetchGameBoard();
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    const deleteSpace = async (event, indexId, index) {
+        
     }
 
     return (
@@ -119,9 +172,15 @@ const EditPage = () => {
                                     </td>
                                     <td>
                                         {editLine === space.id ? (
-                                            <Button handleClick={(event) => saveSpaceData(event, index)} display={"Save"} />
+                                            <div>
+                                                <Button handleClick={(event) => saveSpaceData(event, index)} display={"Save"} />
+                                                <Button handleClick={(event) => cancelEdit(event, index)} display={"Cancel"} />
+                                            </div>
                                         ) : (
-                                            <Button handleClick={(event) => handleEditor(event, space.id)} display={"Edit"} />
+                                            <dir>
+                                                <Button handleClick={(event) => handleEditor(event, space.id, index)} display={"Edit"} validator={editLine===null} />
+                                                <Button handleClick={(event) => deleteSpace(event, space.id, index)} display={"Delete"} validator={editLine===null} />
+                                            </dir>
                                         )}
                                         
                                     </td>
@@ -130,6 +189,14 @@ const EditPage = () => {
                         }
                         return null;
                     })}
+                    <tr>
+                        <td></td><td></td>
+                        <td>
+                            <Button handleClick={(event) => addNewSpace(event)} display={"Add New Space"} validator={editLine===null} />
+                                
+                        </td>
+                        <td></td><td></td>
+                    </tr>
                 </tbody>
             </table>
             <Link className='link' to="/game">
