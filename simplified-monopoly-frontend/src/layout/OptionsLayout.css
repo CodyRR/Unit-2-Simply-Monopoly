@@ -34,7 +34,8 @@ input[type="radio"] {
 
 #save-button,
 #play-options-button,
-#restore-button {
+#restore-button,
+#edit-options-button {
     height: 50px;
     width: 150px;
     font-size: 20px;

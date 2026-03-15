@@ -61,6 +61,11 @@
     font-size: 30px;
 }
 
+#GroupSet{
+    text-align: center;
+    font-size: 30px;
+}
+
 td {
     padding-right: 10px;
     padding-bottom: 25px;
@@ -192,7 +197,7 @@ td {
     font-size: 30px;
 }
 
-#back-home-button {
+#back-home-button, #save-game-button, #quit-game-button {
     align-items: center;
     justify-self: center;
     display: flex;
@@ -202,4 +207,11 @@ td {
     text-align: center;
     justify-content: center;
     margin: 10px;;
+}
+
+#Leave-Game-Options {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router"
+import { Link } from "react-router"
 import Button from "../common/Button"
 import { use, useEffect } from "react"
 import { DataContext } from "../context/DataContext"
@@ -12,8 +12,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         fetchGameBoard, fetchSaveSpaceData, fetchSavePlayerData,
         fetchSaveGeneralData, isSaveData, setNewGame, setIsSaveData,
         setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
-        saveSpaceData, savePlayerData, saveGeneralData, deleteSpaces,
-         deleteSavePlayers, deleteSaveSpaces, deleteSaveGeneral, addNewSpace} = use(DataContext);
+        saveSpaceData, savePlayerData, saveGeneralData, addNewSpace} = use(DataContext);
 
     console.log(allGameBoard);
 
@@ -21,21 +20,13 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         setNewGame(false);
     }
 
-    const useNewGame = (event) => {
+    const useNewGame = () => {
         setNewGame(true);
     }
 
     const handleSetChange = (event) => {
         event.preventDefault();
         setGameSet(event.target.value);
-    }
-
-    const testClick = (event) => {
-        event.preventDefault();
-        deleteSpaces();
-        deleteSavePlayers();
-        deleteSaveSpaces(); 
-        deleteSaveGeneral();
     }
 
     useEffect(() => {
@@ -45,7 +36,6 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         setSavePlayerData(null);
         setSaveGeneralData(null);
         setThePlayers(structuredClone([...defaultPlayers]));
-        console.log("Reset")
     }, []);
 
     useEffect(() => {
@@ -63,7 +53,6 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
             console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
-                console.log("There is save data");
             } else {
                 setIsSaveData(false);
             }
@@ -74,12 +63,15 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
     useEffect(() =>{
     
         if(!isLoading){
+            // If there is no spaces in the board. This will fill them up with default data
             if(allGameBoard.length === 0){
                 addNewSpace(spaceData, "A");
                 addNewSpace(spaceData, "B");
                 addNewSpace(spaceData, "C");
             } else {
-                console.log(allGameBoard);
+
+                // If there is data but not all sets have it, those sets will be filled with default data
+
                 let countA = 0;
                 let countB = 0;
                 let countC = 0;
@@ -97,7 +89,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                     }
 
                 });
-                console.log(`GroupA: ${countA}, GroupB: ${countB}, GroupC: ${countC}`)
+
                 if(countA === 0){
                     addNewSpace(spaceData, "A");
                 }
@@ -109,16 +101,11 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                 }
             }
 
-            console.log(`${saveSpaceData.length}  ${savePlayerData.length}  ${Object.keys(saveGeneralData).length !== 0}` )
+            // This checks if there is any data in the save tables. If there is, there is a save game. Else, no save game.
             if(saveSpaceData.length !== 0 && savePlayerData.length !== 0 && Object.keys(saveGeneralData).length !== 0){
                 setIsSaveData(true);
-                console.log("There is save data");
             } else {
                 setIsSaveData(false);
-                console.log("There is no save data");
-                // deleteSavePlayers(); 
-                // deleteSaveSpaces(); 
-                // deleteSaveGeneral();
             }
 
         }
@@ -147,7 +134,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                     <tr>
                         <td>
                             <div>
-                                <select name="GroupSet" id="GrouptSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
+                                <select name="GroupSet" id="GroupSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
                                     <option value="GROUPA">Set A</option>
                                     <option value="GROUPB">Set B</option>
                                     <option value="GROUPC">Set C</option>
@@ -202,6 +189,18 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                 <tbody>
                     <tr>
                         <td>
+                            <Link className='link' to="/edit">
+                                <Button id="edit-button" display="Edit" classes="home-button" />
+                            </Link>
+                        </td>
+                        <td>
+                            <label>Edit the spaces</label>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td>
                             <Link className='link' to="/about">
                                 <Button id="about-button" display="About" classes="home-button" />
                             </Link>
@@ -211,29 +210,7 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
                         </td>
                     </tr>
                 </tbody>
-
-                <tbody>
-                    <tr>
-                        <td>
-                            <Button id="test-button" handleClick={testClick} display="Test" classes="home-button" />
-                        </td>
-                        <td>
-                            <label>Test adding new space</label>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <Link className='link' to="/edit">
-                                <Button id="edit-button" display="Edit" classes="home-button" />
-                            </Link>
-                        </td>
-                        <td>
-                            <label>See general information about the game</label>
-                        </td>
-                    </tr>
-                </tbody>
+                
             </table>
         </main>
     )

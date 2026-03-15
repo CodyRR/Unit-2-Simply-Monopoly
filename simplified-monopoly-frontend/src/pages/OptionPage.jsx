@@ -89,6 +89,11 @@ const OptionsPage = ({thePlayers, setThePlayers, defaultPlayers, generalOptions,
         navigate("/game")
     }
 
+    const goToSpaceOptions = (event) => {
+        event.preventDefault()
+        navigate("/edit")
+    }
+
     const restoreDefaults = (event) => {
 
         event.preventDefault();
@@ -150,10 +155,11 @@ const OptionsPage = ({thePlayers, setThePlayers, defaultPlayers, generalOptions,
                 <input type="number" name="passGoAmount" step="1" value={optionData.passGoAmount} onChange={(event) => handleGeneralChange("passGoAmount", event)} />
                     
                 <Button id="save-button" handleClick={saveData} validator={validOutput} display={"Save"}/>
+                <div></div>
                 <Button id="play-options-button" handleClick={goToGame} validator={validOutput} display="Play"/>
-                <Link className='link' to="/edit">
-                    <Button id="edit-options-button" display="Edit" />
-                </Link>
+                
+                <Button id="edit-options-button" handleClick={goToSpaceOptions} validator={validOutput} display="Edit" />
+                <div></div>
                 <Button id="restore-button" handleClick={restoreDefaults} display={"Restore Defaults"}/>
             </form>
             {!validOutput && <p className="error-menu" >The names or colors need to be different or the amounts or turns must be positive</p>}
