@@ -13,6 +13,9 @@ const NavMenu = () => {
             <Link className='link' to="/options">
                 Options            
             </Link>
+            <Link className='link' to="/edit">
+                Spaces            
+            </Link>
             <Link className='link' to="/rules">
                 Rules           
             </Link>

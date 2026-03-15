@@ -11,23 +11,24 @@ import Button from "../common/Button";
 const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}) => {
 
     const navigate = useNavigate();
-    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, saveTheSpaces, saveThePlayers, saveTheGeneral, isNewGame} = use(DataContext)
+    const {allGameBoard, saveSpaceData, savePlayerData, saveGeneralData, isNewGame,
+        deleteSaveSpaces,
+        deleteSavePlayers,
+        deleteSaveGeneral,
+        gameSet
+    } = use(DataContext)
 
     const spaceArrayData = [];
     
     const [turnNumber, setTurnNumber] = useState(1);
     const [currentPlayerTurn, setCurrentPlayerTurn] = useState(1);
 
-    console.log("The game is new: " + isNewGame);
-
+    // This checks weither to load New Game data or Save Game data
     if(isNewGame){
-        // spaceData.forEach(function(space) {
-        //     spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4]));
-        // })
-
-
         allGameBoard.forEach(function(space) {
-            spaceArrayData.push(space);
+            if(space.group === gameSet){
+                spaceArrayData.push(space);
+            }
         })
     } else {
         saveSpaceData.forEach(function(space) {
@@ -37,8 +38,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     useEffect(() =>{
   
-        
-    
         if(!isNewGame){
             setThePlayers(savePlayerData);
             setGeneralOptions(saveGeneralData);
@@ -50,14 +49,13 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                     const responseSpace = await fetch('http://localhost:8080/api/save-data-spaces', {
                         method: "DELETE",
                     });
-                    console.log("Save data spaces deleted in Save.");
-
                     const responsePlayer = await fetch('http://localhost:8080/api/save-data-players', {
                         method: "DELETE",
                     });
                     const responseGeneral = await fetch('http://localhost:8080/api/save-data-general', {
                         method: "DELETE",
                     });
+
                     if(!responseSpace.ok){
                         const errorData = await responseSpace.json();
                         throw new Error(
@@ -76,7 +74,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                             errorData.message || `ERROR - Status ${responseGeneral.status}`  
                         );
                     }
-                    console.log("Save data general Deleted.");
 
                     let dieStyle;
                     switch (generalOptions.diceStyle){
@@ -117,7 +114,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                     
                     const dataReturned = await response.json();
                     generalOptions.id = dataReturned.id;
-                    console.log("Save data general created.");
 
                 } catch (error) {
                     console.error(error.message);
@@ -126,25 +122,15 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
             deleteSaveGeneralData();
 
-            // saveTheGeneral(generalOptions)
-            // deleteSavePlayers(); 
-            //     deleteSaveSpaces(); 
-
         }
     
     }, [])
 
     const [theSpaces, setTheSpaces] = useState(spaceArrayData);
     const [widthSize, setWidthSize] = useState(null);
-    // const [turnNumber, setTurnNumber] = useState(generalOptions.turnNumber);
-    // const [currentPlayerTurn, setCurrentPlayerTurn] = useState(generalOptions.currentPlayerTurn);
-
     const [gameState, setGameState] = useState("Start");
     const [dieRoll, setDieRoll] = useState(0);
     const [dieRoll2, setDieRoll2] = useState(0);
-
-    // setTurnNumber(generalOptions.turnNumber);
-    // setCurrentPlayerTurn(generalOptions.currentPlayerTurn);
 
     useEffect(() => {  // This checks screen changes for the board. Use 5 spaces on large, 4 on medium, 3 on small
 
@@ -178,23 +164,23 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
         return Math.floor(Math.random() *max) +1;
     }
 
+    // This will get Space, Player, and General Options and save them to the Database
     const saveTheGame = async (event) => {
         event.preventDefault();
 
         try {
+            // This clears them first
             const responseSpace = await fetch('http://localhost:8080/api/save-data-spaces', {
                 method: "DELETE",
             });
-            console.log("Save data spaces deleted in Save.");
 
             const responsePlayer = await fetch('http://localhost:8080/api/save-data-players', {
                 method: "DELETE",
             });
-            console.log("Save data player deleted in Save.");
 
             for (const space of theSpaces){
                 const data ={
-                    "groupType": "GROUPA",
+                    "groupType": space.group,
                     "spaceName": space.name,
                     "spaceNumber": space.spaceNum,
                     "buyAmount": space.spaceValueStart,
@@ -214,7 +200,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 });
             
             }
-            console.log("Save data space created.");
 
             for (const player of thePlayers){
                 const data ={
@@ -234,7 +219,6 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 });
             
             }
-            console.log("Save data Player created.");
 
             generalOptions.turnNumber = turnNumber;
             generalOptions.currentPlayerTurn = currentPlayerTurn;
@@ -261,6 +245,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 "currentPlayerTurn": generalOptions.currentPlayerTurn
             }
 
+            // This was designed to use update, rather than recreate like the others
             const response = await fetch('http://localhost:8080/api/save-data-general/' + generalOptions.id, {
                 method: "PUT",
                 headers: {
@@ -268,22 +253,20 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 },
                 body: JSON.stringify(data)
             });
-            console.log(theSpaces);
-            console.log(thePlayers);
-            console.log(generalOptions);
             navigate("/");
         } catch (error) {
             console.error(error.message);
         }
 
-        // saveTheSpaces(theSpaces);
-        // saveThePlayers(thePlayers);
-        // generalOptions.turnNumber = turnNumber;
-        // generalOptions.currentPlayerTurn = currentPlayerTurn;
-        // console.log(theSpaces);
-        // console.log(thePlayers);
-        // console.log(generalOptions);
-        // navigate("/");
+    }
+
+    // If quit, them clears all save data
+    const quitTheGame = (event) => {
+
+        deleteSaveSpaces();
+        deleteSavePlayers();
+        deleteSaveGeneral();
+        navigate("/");
     }
 
     const gameEventHandle = (event) =>  { // This handles the game changes. When the Event handler triggers, the gameState determines what happens
@@ -323,7 +306,8 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 }
                 setThePlayers(newData);
             }
-
+            
+            
             setGameState("AfterRoll");
             
         } else if(gameState === "AfterRoll") {
@@ -338,7 +322,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                         spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4], space[5]));
                     })
                     navigate("/results");
-                    setGameState("End")
+                    setGameState("End");
                 } else {
                     let tempNum = turnNumber;
                     setTurnNumber(tempNum + 1);
@@ -346,6 +330,10 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                     setGameState("RollDie");
                 }
             } else {
+                if(thePlayers[currentPlayerTurn-1].amount <0) {
+                    navigate("/results");
+                    setGameState("End");
+                }
                 let tempNum = currentPlayerTurn;
                 setCurrentPlayerTurn(tempNum+1);
                 setGameState("RollDie");
@@ -355,7 +343,11 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
 
     return (
         <main>
-            <Button id="save-game-button" handleClick={saveTheGame} display={"Save Game"} />
+            <div id="Leave-Game-Options">
+                <Button id="save-game-button" handleClick={saveTheGame} display={"Save Game"} />
+                <Button id="quit-game-button" handleClick={quitTheGame} display={"Quit Game"} />
+
+            </div>
             <SpaceField theSpaces={theSpaces} widthSize={widthSize} thePlayers={thePlayers}/>
             <StatusBoard thePlayers={thePlayers} setThePlayers={setThePlayers} theSpaces={theSpaces} setTheSpaces={setTheSpaces} turnNumber={turnNumber} currentPlayerTurn={currentPlayerTurn} gameState={gameState} dieRoll={dieRoll} dieRoll2={dieRoll2} buttonChange={gameEventHandle} />
             <PlayerStatsBoard thePlayers={thePlayers} />

@@ -1,9 +1,12 @@
+import { use } from "react";
 import ImageHandler from "../classes/ImageHandler";
 import Button from "../common/Button";
 import { useNavigate } from "react-router";
+import { DataContext } from "../context/DataContext";
 
 const ResultsPage = ({thePlayers, setThePlayers, defaultPlayers, setGeneralOptions, defaultOption}) => {
 
+    const {deleteSaveSpaces, deleteSavePlayers, deleteSaveGeneral} = use(DataContext)
     const navigate = useNavigate();
     const resultsData = thePlayers.map( player => [player.name, player.color, player.amount]);
     resultsData.sort((a, b) => b[2] - a[2]);
@@ -205,7 +208,9 @@ const ResultsPage = ({thePlayers, setThePlayers, defaultPlayers, setGeneralOptio
 
     const goBackHome = (event) => {
         event.preventDefault();
-
+        deleteSaveSpaces();
+        deleteSavePlayers();
+        deleteSaveGeneral();
         setThePlayers(structuredClone([...defaultPlayers]));
         setGeneralOptions(structuredClone({...defaultOption}));
         navigate("/");

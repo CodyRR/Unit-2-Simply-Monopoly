@@ -27,17 +27,6 @@ public class GameBoardsController {
         return new ResponseEntity<>(allGameBoards, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getGameBoardById(@PathVariable int id) {
-        GameBoards gameBoard = gameBoardsRepository.findById(id).orElse(null);
-        if (gameBoard == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return new ResponseEntity<>(gameBoard, HttpStatus.OK);
-        }
-
-    }
-
     @PostMapping("")
     public ResponseEntity<?> createGameBoard(@RequestBody GameBoards gameBoard) {
         GameBoards savedGameBoard = gameBoardsRepository.save(gameBoard);
@@ -73,9 +62,4 @@ public class GameBoardsController {
         }
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteAllGameBoards() {
-        gameBoardsRepository.deleteAll();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

@@ -10,6 +10,7 @@ const PlayerColorOption = ({id, defaultElement, handleChange}) => {
                 <option value="green">Green</option>
                 <option value="yellow">Yellow</option>
                 <option value="orange">Orange</option>
+                <option value="pink">Pink</option>
                 <option value="cyan">Cyan</option>
                 <option value="purple">Purple</option>
                 <option value="lightgray">Gray</option>

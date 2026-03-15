@@ -28,16 +28,6 @@ public class SaveDataGeneralController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getGeneralById(@PathVariable int id) {
-        SaveDataGeneral generalData = saveDataGeneralRepository.findById(id).orElse(null);
-        if (generalData == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return new ResponseEntity<>(generalData, HttpStatus.OK);
-        }
-    }
-
     @PostMapping("")
     public ResponseEntity<?> createGeneral(@RequestBody SaveDataGeneral generalData) {
         SaveDataGeneral savedGeneralData = saveDataGeneralRepository.save(generalData);
@@ -57,17 +47,6 @@ public class SaveDataGeneralController {
             existingGeneralData.setCurrentPlayerTurn(updatedGeneralData.getCurrentPlayerTurn());
             SaveDataGeneral savedGeneralData = saveDataGeneralRepository.save(existingGeneralData);
             return new ResponseEntity<>(savedGeneralData, HttpStatus.OK);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteGeneral(@PathVariable int id) {
-        SaveDataGeneral existingGeneralData = saveDataGeneralRepository.findById(id).orElse(null);
-        if (existingGeneralData == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            saveDataGeneralRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
