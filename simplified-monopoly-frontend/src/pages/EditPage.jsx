@@ -115,7 +115,6 @@ const EditPage = () => {
             allGameBoard.forEach(async space => {
                 if(space.group === gameSet){
                     if(spaceNumToDelete < space.spaceNum){
-                        console.log(`${space.name} should be ${space.spaceNum - 1}`);
 
                         const data = {
                             "groupType": space.group,
@@ -139,10 +138,10 @@ const EditPage = () => {
                 }
                 
             });
-            
+            fetchGameBoard();
 
         } catch (error) {
-
+            console.error(error.message);
         }
     }
 
@@ -181,7 +180,7 @@ const EditPage = () => {
                     {allGameBoard.map((space, index)=> {
                          if(space.spaceNum !== 0 && space.group === gameSet) {
                             return (
-                                <tr className="edit-row">
+                                <tr key={space.spaceName + "-" + index} className="edit-row">
                                     <td className="edit-space-num">
                                         {space.spaceNum}
                                     </td>

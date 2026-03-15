@@ -81,7 +81,7 @@ const StatusBoard = ({thePlayers, setThePlayers, theSpaces, setTheSpaces, turnNu
     const checkOwner = () => { // This checks the space for the owner
 
 
-        if(theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].name === "GO"){
+        if(theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].name === "GO" && theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].isStartSpace){
             return (
                 <div>
                     <div>

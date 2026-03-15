@@ -12,7 +12,6 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         setAllGameBoard, setSaveSpaceData, setSavePlayerData, setSaveGeneralData,
         saveSpaceData, savePlayerData, saveGeneralData, addNewSpace} = use(DataContext);
 
-
     const useSaveGame = () => {
         setNewGame(false);
     }
