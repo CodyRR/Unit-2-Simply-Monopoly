@@ -7,5 +7,9 @@ export const aboutList = [
     "Special thanks to W3School to coding and documentation",
     "Dice Resources by blueberrymuffin: https://www.spriters-resource.com/mobile/hardestgameever2/asset/270550/",
     "Game Piece Resourse by Sapristi45: https://www.spriters-resource.com/sega_genesis/clue/asset/154349/",
-    "--Extra pieces were recolored by me" 
+    "--Extra pieces were recolored by me",
+    "Version 2:",
+    "This works with backend to send data to a database",
+    "Data includes all available spaces and save data for spaces, players, and general options" ,
+    "Space names, buy amounts, and rent amounts can be edited"
 ]

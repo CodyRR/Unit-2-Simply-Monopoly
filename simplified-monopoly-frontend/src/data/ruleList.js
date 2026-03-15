@@ -10,5 +10,10 @@ export const ruleList = [
     "If the player lands on or passes GO, they gain a bonus of $200",
     "The game will last for 10 turns or if one player runs out of money",
     "The winner is whoever has the most money at the end of the game",
-    "You can change player names, colors, starting amount, number of turns, number of dice, and amount of pay from GO from the options menu"
+    "You can change player names, colors, starting amount, number of turns, number of dice, and amount of pay from GO from the options menu",
+    "You can change the spaces in the Edit page",
+    "   There are three sets of spaces that you can choose from.",
+    "   You can choose which set from the Home page",
+    "When in a game, you can save your game and return at a later time",
+    "   To reload, click the 'Saved Game' on the Home page"
 ]
