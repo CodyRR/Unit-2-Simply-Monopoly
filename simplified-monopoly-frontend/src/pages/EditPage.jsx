@@ -52,9 +52,21 @@ const EditPage = () => {
         setAllGameBoard(newData)
     }
 
+    const handleSetChange = (event) => {
+        event.preventDefault();
+        setGameSet(event.target.value);
+    }
+
     return (
         <main>
             <h1>Edit Board</h1>
+            <div>
+                <select name="GroupSet" id="GrouptSet" value={gameSet} onChange={(event) =>handleSetChange(event)}>
+                    <option value="GROUPA">Set A</option>
+                    <option value="GROUPB">Set B</option>
+                    <option value="GROUPC">Set C</option>
+                </select>
+            </div>
             <table className="welcome-table">
                 <thead>
                     <tr>
