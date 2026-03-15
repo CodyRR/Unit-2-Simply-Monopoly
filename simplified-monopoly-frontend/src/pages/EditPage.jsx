@@ -244,6 +244,9 @@ const EditPage = () => {
             <Link className='link' to="/game">
                 <Button id="play-button" handleClick={useNewGame} display="Play" classes="home-button"/>
             </Link>
+            <Link className='link' to="/options">
+                <Button id="options-button" display="Options" classes="home-button" />
+            </Link>
         </main>
     )
 
