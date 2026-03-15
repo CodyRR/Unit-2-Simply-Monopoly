@@ -139,7 +139,6 @@ export const DataProvider = ({ children }) => {
         }
     }
 
-
     const fetchGameBoard = async () => {
 
         const boards = [];
