@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import Button from "../common/Button";
 import { Link } from "react-router";
@@ -8,8 +8,55 @@ const EditPage = () => {
     const { allGameBoard, setAllGameBoard, fetchGameBoard, setNewGame, gameSet, setGameSet} = use(DataContext)
     const [ editLine, setEditLine] = useState(null);
     const [ originalData, setOriginalData] = useState(null);
+    const [ validEntry, setValidEntry] = useState(true);
 
-     const useNewGame = () => {
+    useEffect(() => {
+    
+        const names = [];
+        const buyNums = [];
+        const rentNums = [];
+
+        allGameBoard.forEach(space => {
+            if(space.group === gameSet){
+                names.push(space.name);
+                buyNums.push(space.spaceValueStart);
+                rentNums.push(space.spaceValueBought);
+            }
+        });
+
+        let validNames = checkNames(names);
+        let validBuy = checkForNegatives(buyNums);
+        let validRent = checkForNegatives(rentNums);
+
+        if(validNames && validBuy && validRent){
+            setValidEntry(true);
+        } else {
+            setValidEntry(false);
+        }
+
+    }, [allGameBoard])
+
+    const checkNames = (data) => {
+        for(let i = 0; i < data.length; i++){
+            if(data[i].length ===0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const checkForNegatives = (data) => {
+
+        for(let i = 0; i < data.length; i++){
+
+            if(data[i] < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const useNewGame = () => {
         setNewGame(true);
     }
 
@@ -211,7 +258,7 @@ const EditPage = () => {
                                     <td className="edit-action">
                                         {editLine === space.id ? (
                                             <div className="edit-action-buttons">
-                                                <Button classes={"edit-buttons"} handleClick={(event) => saveSpaceData(event, index)} display={"Save"} />
+                                                <Button classes={"edit-buttons"} handleClick={(event) => saveSpaceData(event, index)} display={"Save"} validator={validEntry} />
                                                 <Button classes={"edit-buttons"} handleClick={(event) => cancelEdit(event, index)} display={"Cancel"} />
                                             </div>
                                         ) : (

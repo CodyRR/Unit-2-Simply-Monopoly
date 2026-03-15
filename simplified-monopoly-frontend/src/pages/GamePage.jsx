@@ -306,7 +306,8 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                 }
                 setThePlayers(newData);
             }
-
+            
+            
             setGameState("AfterRoll");
             
         } else if(gameState === "AfterRoll") {
@@ -321,7 +322,7 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                         spaceArrayData.push( new Space(space[0], space[1], space[2], space[3], space[4], space[5]));
                     })
                     navigate("/results");
-                    setGameState("End")
+                    setGameState("End");
                 } else {
                     let tempNum = turnNumber;
                     setTurnNumber(tempNum + 1);
@@ -329,6 +330,10 @@ const GamePage = ({thePlayers, setThePlayers, generalOptions, setGeneralOptions}
                     setGameState("RollDie");
                 }
             } else {
+                if(thePlayers[currentPlayerTurn-1].amount <0) {
+                    navigate("/results");
+                    setGameState("End");
+                }
                 let tempNum = currentPlayerTurn;
                 setCurrentPlayerTurn(tempNum+1);
                 setGameState("RollDie");

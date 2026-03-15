@@ -93,7 +93,7 @@ const StatusBoard = ({thePlayers, setThePlayers, theSpaces, setTheSpaces, turnNu
                 </div>
             )
         } else if (theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].owner === "Sale") {
-            
+
             return(
                 <div>
                     <div>
@@ -103,7 +103,7 @@ const StatusBoard = ({thePlayers, setThePlayers, theSpaces, setTheSpaces, turnNu
                         Buy for {theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].spaceValueStart}
                     </div>
                     <div>
-                        <Button id="buy-button" display="Yes" classes="buy-button" handleClick={()=>buySpace()} />
+                        <Button id="buy-button" display="Yes" classes="buy-button" handleClick={()=>buySpace()} validator={theSpaces[thePlayers[currentPlayerTurn -1].currentSpace].spaceValueStart < thePlayers[currentPlayerTurn -1].amount} />
                         <Button id="no-button" display="No" classes="no-button" handleClick={()=>(setBuySpaceOption(false))} />
                     </div>
                 </div>
