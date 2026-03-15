@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import Button from "../common/Button";
 import { Link } from "react-router";
@@ -8,6 +8,7 @@ const EditPage = () => {
     const { allGameBoard, setAllGameBoard, fetchGameBoard, setNewGame, gameSet, setGameSet} = use(DataContext)
     const [ editLine, setEditLine] = useState(null);
     const [ originalData, setOriginalData] = useState(null);
+    const [ deleteLoading, setDeleteLoading] = useState(null);
 
      const useNewGame = (event) => {
         setNewGame(true);
@@ -26,8 +27,6 @@ const EditPage = () => {
                 "isStart": allGameBoard[index].isStartSpace
             }
 
-            console.log(allGameBoard[index].id)
-            console.log(data);
             const response = await fetch("http://localhost:8080/api/game-boards/" + allGameBoard[index].id, {
                 method: "PUT",
                 headers: {
@@ -103,11 +102,54 @@ const EditPage = () => {
             fetchGameBoard();
         } catch (error) {
             console.error(error.message);
+        } finally {
+            setDeleteLoading(true);
         }
     }
 
-    const deleteSpace = async (event, indexId, index) {
-        
+    const deleteSpace = async (event, indexId, index) => {
+        event.preventDefault();
+        setDeleteLoading(true);
+
+        let spaceNumToDelete = allGameBoard[index].spaceNum;
+        console.log(indexId);
+        try {
+            const responseDelete = await fetch('http://localhost:8080/api/game-boards/' + indexId, {
+                method: "DELETE",
+            });
+
+            allGameBoard.forEach(async space => {
+                if(space.group === gameSet){
+                    if(spaceNumToDelete < space.spaceNum){
+                        console.log(`${space.name} should be ${space.spaceNum - 1}`);
+
+                        const data = {
+                            "groupType": space.group,
+                            "spaceName": space.name,
+                            "spaceNumber": space.spaceNum - 1,
+                            "buyAmount": space.spaceValueStart,
+                            "rentAmount": space.spaceValueBought,
+                            "isStart": space.isStartSpace
+                        }
+
+                        const response = await fetch("http://localhost:8080/api/game-boards/" + space.id, {
+                            method: "PUT",
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        });
+                        fetchGameBoard();
+
+                    }
+                }
+                
+            });
+            
+
+        } catch (error) {
+
+        }
     }
 
     return (

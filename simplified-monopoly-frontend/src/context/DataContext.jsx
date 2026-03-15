@@ -173,6 +173,7 @@ export const DataProvider = ({ children }) => {
             console.error(error.message);
         } finally {
             setAllGameBoard(boards);
+            console.log("Finished getting Board Spaces")
         }
     }
 
