@@ -204,13 +204,13 @@ export const DataProvider = ({ children }) => {
         try {
             for (const newSpace of newSpaceArray){
                 const data = {
-                        "groupType": "GROUP" + groupLetter,
-                        "spaceName": newSpace[0],
-                        "spaceNumber": newSpace[1],
-                        "buyAmount": newSpace[2],
-                        "rentAmount": newSpace[3],
-                        "isStart": newSpace[4]
-                    }
+                    "groupType": "GROUP" + groupLetter,
+                    "spaceName": newSpace[0],
+                    "spaceNumber": newSpace[1],
+                    "buyAmount": newSpace[2],
+                    "rentAmount": newSpace[3],
+                    "isStart": newSpace[4]
+                }
                 const response = await fetch('http://localhost:8080/api/game-boards', {
                     method: "POST",
                     headers: {
