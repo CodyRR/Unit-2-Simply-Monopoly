@@ -219,7 +219,7 @@ const ResultsPage = ({thePlayers, setThePlayers, defaultPlayers, setGeneralOptio
     return (
         <main>
             <div className="results-board">
-                <h3>AND THE WINNER IS...</h3>
+                <h3 className="rainbow">AND THE WINNER IS...</h3>
                 {displayResults()}
             </div>
             <Button id="back-home-button" handleClick={goBackHome} display={"Go to Home Page"}/>
