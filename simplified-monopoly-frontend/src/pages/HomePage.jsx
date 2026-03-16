@@ -86,9 +86,6 @@ const HomePage = ({setThePlayers, defaultPlayers}) => {
         }
     }, [isLoading])
 
-
-    
-
     return (
         <main id="home-container">
             <h1 id="welcome-sign">Welcome to Simply Monopoly</h1>
