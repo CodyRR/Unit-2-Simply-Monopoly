@@ -41,7 +41,7 @@
 
 ---
 
-<a name="about" ></a>
+<a name="about"></a>
 ## About the Project
 
 I developed a web application called Simply Monopoly, a simplified and customizable version of the classic Monopoly game designed for quick, pick-up-and-play sessions. The application supports up to four players, allowing users to move around a board, purchase properties, and collect rent through an intuitive interface.
@@ -50,10 +50,10 @@ A key focus of the project was customization and user control. Players can perso
 
 From a technical standpoint, I implemented persistent game state by integrating database functionality, enabling users to save and resume games through backend data storage. This project strengthened my ability to design interactive web applications, manage user input, and connect front-end functionality with backend systems.
 
-<a name="features" ></a>
+<a name="features"></a>
 ## Simply Monopoly – Feature Overview
 
-### General Gameplay
+### 🎮 General Gameplay
 
 - Turn-based system where players move around the board based on dice rolls
 - Property system:
@@ -66,7 +66,7 @@ From a technical standpoint, I implemented persistent game state by integrating 
   - Configurable turn limit
   - Player bankruptcy detection
 
-### Customization
+### 🎨 Customization
 
 - Player personalization:
   - Custom names, colors, and starting balance
@@ -78,14 +78,14 @@ From a technical standpoint, I implemented persistent game state by integrating 
   - Configurable number of dice
   - Custom bonus amount for passing the starting point
 
-### Additional Features
+### 💾 Additional Features
 
 - Persistent game state:
   - Save and reload functionality using database integration
 - Multiple board variations:
   - Three distinct space group sets supporting different gameplay experiences
 
-<a name="tech" ></a>
+<a name="tech"></a>
 ## Tech Stack
 ### Front End
 
@@ -107,10 +107,59 @@ From a technical standpoint, I implemented persistent game state by integrating 
 | <img src="https://img.shields.io/badge/Maven-pink?style=for-the-badge&logo=apachemaven&logoColor=333333" alt="Maven" /> | Build automation and dependency management tool used to manage project structure, libraries, and application lifecycle |
 | <img src="https://img.shields.io/badge/MySQL-darkblue?style=for-the-badge" alt="MySQL" /> | Relational database management system used for storing, querying, and managing application data |
 
-<a name="visuals" ></a>
-## Game Visuals
+<a name="visuals"></a>
+## Key Visuals
 
-<a name="install" ></a>
+### 🗺️ Wireframes
+
+<details>
+  <summary>Click here to view wireframes</summary><br/>
+  Home and Game Pages
+  <div align="center">
+    <img src="images/WireHomePage.png" alt="Wire Home Page" height=350px />
+    <img src="images/WireGamePage.png" alt="Wire Game Page" height=350px />
+  </div>
+
+  Edit and Options Pages
+  <div align="center">
+    <img src="images/WireEditPage.png" alt="Wire Edit Page" height=350px />
+    <img src="images/WireOptionsPage.png" alt="Wire Options Page" height=350px />
+  </div>
+</details>
+
+### 🕹️ UI Visuals
+
+Home Page
+<div>
+  <img src="images/HomePage.png" alt="Home Page" width=60% />
+</div>
+
+Game Page
+<div>
+  <img src="images/GamePage.png" alt="Game Page" width=60% />
+</div>
+
+Edit and Options Pages
+<div>
+  <img src="images/EditPage.png" alt="Edit Page" width=40% />
+  <img src="images/OptionsPage.png" alt="Options Page" width=40% />
+</div>
+
+Results Page
+<div>
+  <img src="images/ResultsPage.png" alt="Results Page" width=60% />
+</div>
+
+### 📋 Database Structure
+
+<details>
+  <summary>Click to view Entity Relationship Diagram</summary>
+  <div>
+    <img src="images/DataBaseTables.png" alt="Images of ERD" width=60% />
+  </div>
+</details>
+
+<a name="install"></a>
 ## Installation
 
 To run this project on a local device, you will need the following tools.
@@ -119,12 +168,12 @@ To run this project on a local device, you will need the following tools.
 - Java Development Kit v21
 - MySQL Server
 
-### Set-up Workspace
+### 💡 Set-up Workspace
 **Clone the Respository:** I use GitHub Desktop with its built in features to clone. Alternatively, use the Terminal to clone.
   ```shell
   git clone https://github.com/CodyRR/Unit-2-Simply-Monopoly.git
   ```
-### Back-end Setup
+### 💡 Back-end Setup
 1. Create a MySQL Database called `simply_monopoly_database`
    
 1. Create an .env file at the project root directory (`simply-monopoly-backend`)
@@ -142,7 +191,7 @@ To run this project on a local device, you will need the following tools.
     mvn spring-boot:run
     ```
 
-### Front-end Setup
+### 💡 Front-end Setup
 1. In your terminal, navigate to the front-end directory (`simplified-monopoly-frontend`)
    ```shell
    cd ../simplified-monopoly-frontend
@@ -156,7 +205,7 @@ To run this project on a local device, you will need the following tools.
 
 1. Open your browser to `http://localhost:5173`
 
-<a name="future" ></a>
+<a name="future"></a>
 ## Future Features
 
 1. **Adding confirmation/warning windows**
@@ -172,3 +221,9 @@ To run this project on a local device, you will need the following tools.
 1. **Visual improvement**
     - Fix up the CSS so that the application looks cleaner
     - Possible remaking a color theme
+
+---
+
+## Author
+
+Cody Robinson - [@CodyRR](https://github.com/CodyRR) - [Linkedin](www.linkedin.com/in/codyr-robinson)
